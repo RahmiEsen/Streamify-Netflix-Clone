@@ -1,4 +1,4 @@
-@import 'variables';
+@use './variables' as var;
 
 *,
 *::before,
@@ -9,5 +9,5 @@
 }
 
 body {
-  background-color: $pure-black;
+  background-color: var.$pure-black;
 }
