@@ -1,12 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-
-export interface NavLink {
-  path: string;
-  label: string;
-  exact?: boolean;
-}
+import { Observable } from 'rxjs';
+import { NavigationService } from '../../services/navigation.service';
+import { NavLink } from '../../models/nav-link.model';
 
 @Component({
   selector: 'app-header',
@@ -14,13 +11,10 @@ export interface NavLink {
   imports: [RouterModule, CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-  public navLinks: NavLink[] = [
-    { path: '/browse', label: 'Startseite', exact: true },
-    { path: '/series', label: 'Serien' },
-    { path: '/movies', label: 'Filme' },
-    { path: '/latest', label: 'Neu und Beliebt' },
-    { path: '/my-list', label: 'Meine Liste' },
-  ];
+  private readonly navigationService = inject(NavigationService);
+  public readonly navLinks$: Observable<ReadonlyArray<NavLink>> =
+    this.navigationService.getMainNavLinks();
 }

@@ -2,7 +2,7 @@
   <a routerLink="/browse" class="logo-link" aria-label="Netflix Startseite">
     <img src="assets/logo.svg" alt="Netflix Logo" />
   </a>
-  <ul>
+  <ul *ngIf="navLinks$ | async as navLinks">
     <li *ngFor="let link of navLinks">
       <a
         [routerLink]="link.path"

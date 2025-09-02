@@ -29,13 +29,20 @@ header {
     padding: 0;
     li {
       list-style-type: none;
-      font-size: 14px;
-      color: #e5e5e5;
       margin-left: 20px;
-      transition: color 0.4s;
       cursor: pointer;
-      &:hover {
-        color: #b3b3b3;
+      a {
+        font-size: 14px;
+        transition: color 0.4s;
+        text-decoration: none;
+        color: #e5e5e5;
+        &:hover {
+          color: #b3b3b3;
+        }
+        &.active-link {
+          font-weight: 500;
+          color: #fff;
+        }
       }
     }
   }
