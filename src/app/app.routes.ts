@@ -5,4 +5,9 @@ export const routes: Routes = [
     path: 'browse',
     loadChildren: () => import('./features/browse/browse.routes').then((m) => m.BROWSE_ROUTES),
   },
+  {
+    path: '',
+    redirectTo: 'browse',
+    pathMatch: 'full',
+  },
 ];
