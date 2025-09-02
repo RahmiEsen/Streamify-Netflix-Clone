@@ -5,5 +5,6 @@ export const BROWSE_ROUTES: Routes = [
   {
     path: '',
     component: BrowseComponent,
+    title: 'Startseite-Netflix',
   },
 ];

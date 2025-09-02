@@ -3,10 +3,10 @@ import { HeroBannerComponent } from '../../../../shared/components/hero-banner/h
 import { MovieListComponent } from '../../../../shared/components/movie-list/movie-list.component';
 
 @Component({
-  selector: 'app-browse',
+  selector: 'app-series',
   standalone: true,
   imports: [HeroBannerComponent, MovieListComponent],
-  templateUrl: './browse.component.html',
-  styleUrl: './browse.component.scss',
+  templateUrl: './series.component.html',
+  styleUrl: './series.component.scss',
 })
-export class BrowseComponent {}
+export class SeriesComponent {}
