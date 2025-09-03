@@ -1,0 +1,23 @@
+@use '../../../styles/mixins' as m;
+@use '../../../styles/variables' as var;
+
+.embedded-components {
+  position: absolute;
+  @include m.center;
+  bottom: 35%;
+  right: 0;
+  gap: 20px;
+  height: 2.4vw;
+  .maturity-rating {
+    background-color: rgba(51, 51, 51, 0.6);
+    font-size: 1.1vw;
+    border: 3px var.$border-color-rating;
+    border-left-style: solid;
+    padding: 0.5vw 3.5vw 0.5vw 0.8vw;
+  }
+}
+:host ::ng-deep app-icon-button button.primary-btn {
+  /* width: 2.4vw;
+    height: 2.4vw; */
+  border: 1px solid hsla(0, 0%, 100%, 0.5);
+}
