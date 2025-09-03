@@ -1,0 +1,11 @@
+<button
+  [ngClass]="{
+    'primary-btn': variant === 'primary',
+    'secondary-btn': variant === 'secondary',
+  }"
+>
+  <div class="btn-icon">
+    <img [src]="'assets/button/' + icon" alt="" />
+  </div>
+  <span>{{ text }}</span>
+</button>

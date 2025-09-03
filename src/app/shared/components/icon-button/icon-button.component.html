@@ -1,0 +1,12 @@
+<button
+  [ngClass]="{
+    'primary-btn': variant === 'primary',
+    'secondary-btn': variant === 'secondary',
+  }"
+  (click)="onButtonClick()"
+>
+  <div class="btn-icon">
+    <img [src]="'assets/button/' + icon" alt="" />
+  </div>
+  <span *ngIf="tooltip" class="tooltip-text">{{ tooltip }}</span>
+</button>

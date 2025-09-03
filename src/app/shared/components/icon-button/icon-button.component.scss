@@ -1,0 +1,60 @@
+@use '../../../shared/styles/mixins' as m;
+@use '../../../shared/styles/variables' as var;
+
+button {
+  position: relative;
+  @include m.center;
+  background-color: rgba(42, 42, 42, 0.6);
+  border: 2px solid hsla(0, 0%, 100%, 0.5);
+  border-radius: 50%;
+  padding: 0.8rem;
+  cursor: pointer;
+  .btn-icon {
+    @include m.center;
+    height: 1.8rem;
+    width: 1.8rem;
+    img {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: #fff;
+  }
+  &.secondary-btn {
+    border-color: var.$white;
+    background-color: var.$white;
+  }
+  &:hover .tooltip-text {
+    opacity: 1;
+    visibility: visible;
+  }
+  .tooltip-text {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 25px;
+    background-color: var.$tooltip-color;
+    color: var.$black;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease-in-out;
+    &::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 10px;
+      border-style: solid;
+      border-color: var.$tooltip-color transparent transparent transparent;
+    }
+  }
+}
