@@ -1,11 +1,6 @@
 <main>
   <app-list-header></app-list-header>
   <div class="slider">
-    <app-movie-card></app-movie-card>
-    <app-movie-card></app-movie-card>
-    <app-movie-card></app-movie-card>
-    <app-movie-card></app-movie-card>
-    <app-movie-card></app-movie-card>
-    <app-movie-card></app-movie-card>
+    <app-movie-card *ngFor="let movie of movies" [movie]="movie"> </app-movie-card>
   </div>
 </main>

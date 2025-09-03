@@ -1,0 +1,16 @@
+@use '../../../shared/styles/mixins' as m;
+@use '../../../shared/styles/variables' as var;
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  .card-container {
+    @include m.center;
+    border-radius: 6px;
+    padding: 0 0.2vw;
+    overflow: hidden;
+    img {
+      width: 100%;
+    }
+  }
+}

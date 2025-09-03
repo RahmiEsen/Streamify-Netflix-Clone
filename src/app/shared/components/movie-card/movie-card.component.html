@@ -1,1 +1,5 @@
-<img src="assets/card-test.webp" alt="" style="width: 220px; height: 123px" />
+<a [routerLink]="['/show', movie.id]" [title]="movie.title">
+  <div class="card-container">
+    <img [src]="movie.imageUrl" [alt]="movie.title" />
+  </div>
+</a>

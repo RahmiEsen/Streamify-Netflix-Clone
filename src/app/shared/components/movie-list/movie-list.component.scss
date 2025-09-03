@@ -4,6 +4,7 @@
 main {
   position: relative;
   @include m.column-center-start;
+  margin: 3vw 0;
   gap: 10px;
   --icon-opacity: 0;
   --icon-transform: translateX(-0px);
@@ -12,7 +13,7 @@ main {
     position: relative;
     @include m.center;
     margin: 0;
-    gap: 5px;
+    gap: 0.2vw;
   }
   &:hover {
     --icon-opacity: 1;

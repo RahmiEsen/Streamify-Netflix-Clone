@@ -19,4 +19,9 @@
 
 :host ::ng-deep app-icon-button button.primary-btn {
   border: 1px solid hsla(0, 0%, 100%, 0.5);
+  padding: 0.8vw;
+  .btn-icon {
+    height: 1.8vw;
+    width: 1.8vw;
+  }
 }
