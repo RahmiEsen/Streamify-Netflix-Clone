@@ -1,15 +1,18 @@
+@use '../../../shared/styles/mixins' as m;
+@use '../../../shared/styles/variables' as var;
+
 header {
-  position: sticky;
-  display: flex;
-  justify-content: start;
-  align-items: center;
+  position: fixed;
+  @include m.start-center;
   top: 0;
   left: 0;
   min-height: 68px;
   width: 100%;
-  background-color: rgb(20, 20, 20);
+  background-color: transparent;
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 10%, transparent);
+  /* background-color: rgb(20, 20, 20); */
   padding: 0 4%;
-  z-index: 1;
+  z-index: 2;
   a {
     display: flex;
     justify-content: center;
@@ -23,25 +26,25 @@ header {
     }
   }
   ul {
-    align-items: center;
-    display: flex;
+    @include m.center;
     margin: 0;
     padding: 0;
     li {
       list-style-type: none;
       margin-left: 20px;
+      line-height: 1.2;
       cursor: pointer;
       a {
         font-size: 14px;
         transition: color 0.4s;
         text-decoration: none;
-        color: #e5e5e5;
+        color: var.$header-color;
         &:hover {
-          color: #b3b3b3;
+          color: var.$header-color-hover;
         }
         &.active-link {
           font-weight: 500;
-          color: #fff;
+          color: var.$white;
         }
       }
     }

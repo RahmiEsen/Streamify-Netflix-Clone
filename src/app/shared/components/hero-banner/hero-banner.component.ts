@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { HeroMetaComponent } from './hero-meta/hero-meta.component';
 
 @Component({
   selector: 'app-hero-banner',
-  imports: [],
+  standalone: true,
+  imports: [HeroMetaComponent],
   templateUrl: './hero-banner.component.html',
   styleUrl: './hero-banner.component.scss',
 })

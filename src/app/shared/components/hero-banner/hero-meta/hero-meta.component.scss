@@ -1,0 +1,28 @@
+@use '../../../styles/mixins' as m;
+
+main {
+  position: absolute;
+  @include m.column-center-start;
+  top: 0;
+  bottom: 35%;
+  left: 4%;
+  width: 36%;
+  z-index: 1;
+  img {
+    position: relative;
+    width: 100%;
+    min-height: 13.2vw;
+    margin-bottom: 1.2vw;
+    transform-origin: bottom left;
+  }
+  p {
+    width: 100%;
+    color: #fff;
+    font-size: 1.2vw;
+    font-weight: 400;
+    line-height: normal;
+    margin: 0.5vw 0 0;
+    margin-top: 0.1vw;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.45);
+  }
+}
