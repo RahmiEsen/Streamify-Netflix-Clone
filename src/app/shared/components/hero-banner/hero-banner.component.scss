@@ -2,7 +2,7 @@
 @use '../../../shared/styles/variables' as var;
 
 main {
-  position: absolute;
+  position: relative;
   @include m.center;
   height: 56.25vw;
   width: 100%;

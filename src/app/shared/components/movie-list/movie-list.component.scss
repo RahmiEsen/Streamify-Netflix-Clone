@@ -1,0 +1,22 @@
+@use '../../../shared/styles/mixins' as m;
+@use '../../../shared/styles/variables' as var;
+
+main {
+  position: relative;
+  @include m.column-center-start;
+  gap: 10px;
+  --icon-opacity: 0;
+  --icon-transform: translateX(-0px);
+  --text-opacity: 0;
+  .slider {
+    position: relative;
+    @include m.center;
+    margin: 0;
+    gap: 5px;
+  }
+  &:hover {
+    --icon-opacity: 1;
+    --icon-transform: translateX(0);
+    --text-opacity: 0;
+  }
+}
