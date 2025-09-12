@@ -62,13 +62,66 @@
     .controls-wrapper {
       @include m.space;
       width: 100%;
-      height: 100%;
-      margin-bottom: 0.5rem;
+      margin: 0 0.5em;
       .controls {
         @include m.start-center;
         width: 100%;
         height: 100%;
         gap: 0.5vw;
+      }
+    }
+    .meta-data {
+      @include m.start-center;
+      width: 100%;
+      margin: 0.8em 0;
+      gap: 0.5em;
+      span {
+        font-size: 16px;
+        color: var.$meta-data-color;
+      }
+      .quality {
+        color: #ffffffe6;
+        font-size: 0.7em;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 3px;
+        padding: 0 0.5em;
+      }
+      .fsk {
+        color: var.$white;
+        font-size: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        text-overflow: ellipsis;
+        text-transform: uppercase;
+        padding: 0 0.4em;
+        unicode-bidi: normal;
+        white-space: nowrap;
+        overflow: hidden;
+        cursor: pointer;
+      }
+      .audio-icon {
+        height: 2em;
+        width: 3.5em;
+      }
+    }
+    .evidence-list {
+      @include m.start-center;
+      width: 100%;
+      margin-bottom: 0.5em;
+      .evidence-item {
+        @include m.center;
+        .evidence-separator {
+          flex: 0 0 auto;
+          display: inline-block;
+          width: 0.35em;
+          height: 0.35em;
+          background-color: #646464;
+          border-radius: 50%;
+          margin-right: 0.5em;
+        }
+      }
+      .evidence-text {
+        font-size: 16px;
+        margin-right: 0.5em;
       }
     }
   }
