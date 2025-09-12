@@ -2,10 +2,10 @@
 @use '../../../styles/variables' as var;
 
 main {
-  position: absolute;
+  position: relative;
   @include m.column-center-start;
-  top: 0;
-  bottom: 35%;
+  top: 2.5vw;
+  bottom: 0;
   left: 4%;
   width: 36%;
   z-index: 1;

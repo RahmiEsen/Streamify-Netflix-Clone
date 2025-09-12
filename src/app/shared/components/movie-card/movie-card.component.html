@@ -1,5 +1,20 @@
-<a [routerLink]="['/show', movie.id]" [title]="movie.title">
+<div
+  class="movie-card-wrapper"
+  [class.is-hovered]="isHovered"
+  [class.is-first]="isFirst"
+  [class.is-last]="isLast"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()"
+>
   <div class="card-container">
     <img [src]="movie.imageUrl" [alt]="movie.title" />
   </div>
-</a>
+  <app-card-detail
+    *ngIf="isHovered"
+    [movie]="movie"
+    [class.is-animated]="isAnimationReady"
+    [class.is-first]="isFirst"
+    [class.is-last]="isLast"
+  >
+  </app-card-detail>
+</div>

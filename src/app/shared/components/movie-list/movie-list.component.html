@@ -1,6 +1,11 @@
-<main>
-  <app-list-header></app-list-header>
-  <div class="slider">
-    <app-movie-card *ngFor="let movie of movies" [movie]="movie"> </app-movie-card>
-  </div>
+<main [class.is-row-hovered]="isRowHovered">
+  <app-list-header [totalPages]="sliderTotalPages" [currentPage]="sliderCurrentPage">
+  </app-list-header>
+  <app-slider-control
+    [items]="movies"
+    (rowHoverStateChange)="onCardHoverChange($event)"
+    (pagesInitialized)="onPagesInitialized($event)"
+    (pageChange)="onPageChange($event)"
+  >
+  </app-slider-control>
 </main>

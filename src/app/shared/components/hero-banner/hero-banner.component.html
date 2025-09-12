@@ -1,10 +1,10 @@
 <main>
-  <img src="assets/test.webp" alt="" />
-  <!-- <video autoplay loop playsinline>
-        <source src="assets/test.mp4" type="video/mp4"/>
-    </video> -->
-  <app-hero-meta></app-hero-meta>
-  <app-age-rating></app-age-rating>
-  <div class="trailer-vignette"></div>
+  <img src="assets/test.webp" alt="Hero Image" [class.fade-in]="videoEnded" />
+  <video #videoPlayer autoplay playsinline [class.fade-out]="videoEnded">
+    <source src="assets/test2.mp4" type="video/mp4" />
+  </video>
+  <div class="trailer-vignette" [class.fade-out]="videoEnded"></div>
   <div class="hero-vignette"></div>
+  <app-hero-meta></app-hero-meta>
+  <app-age-rating [icon]="buttonIcon" (buttonClick)="handleButtonClick()"> </app-age-rating>
 </main>

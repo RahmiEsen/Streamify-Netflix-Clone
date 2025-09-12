@@ -4,4 +4,10 @@
     <span class="action-text">Alle durchstöbern</span>
     <img class="action-icon" src="assets/icons/right.png" alt="right" />
   </a>
+  <app-slider-indicator
+    *ngIf="totalPages > 1"
+    [totalPages]="totalPages"
+    [currentPage]="currentPage"
+  >
+  </app-slider-indicator>
 </div>

@@ -1,9 +1,17 @@
 @use '../../../styles/mixins' as m;
 @use '../../../styles/variables' as var;
 
-.wrapper {
-  @include m.start-center;
+:host {
+  --gap: 5px;
+  --visible: 6;
   width: 100%;
+}
+
+.wrapper {
+  position: relative;
+  @include m.space;
+  width: 100%;
+  padding: 0 4%;
   .category-header {
     @include m.center;
     text-decoration: none;
@@ -12,11 +20,11 @@
       color: #e5e5e5;
       font-size: 1.4vw;
       font-weight: 700;
-      margin-right: 0.5vw;
+      margin-right: 0.25vw;
     }
     .action-text {
       color: #54b9c5;
-      font-size: 0.9vw;
+      font-size: 1vw;
       font-weight: 700;
       max-width: 0;
       white-space: nowrap;
@@ -42,8 +50,8 @@
         opacity: 1;
       }
       .action-icon {
-        width: 1.2vw;
-        height: 1.2vw;
+        width: 1vw;
+        height: 1vw;
       }
     }
   }

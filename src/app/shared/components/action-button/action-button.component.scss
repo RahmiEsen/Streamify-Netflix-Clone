@@ -6,20 +6,20 @@ button {
   @include m.center;
   border: 0px;
   border-radius: 4px;
-  padding: 0.8vw 2.4vw 0.8vw 2vw;
-  margin: 0 1rem 1rem 0;
+  padding: 0.54vw 1.6vw 0.54vw 1.3vw;
+  margin: 0 0.7vw 0.7vw 0;
   gap: 10px;
   cursor: pointer;
   span {
     display: block;
-    font-size: 1.6vw;
+    font-size: 1.2vw;
     font-weight: 600;
     line-height: 2.4vw;
   }
   .btn-icon {
     @include m.center;
-    height: 2.4vw;
-    width: 2.4vw;
+    height: 1.8vw;
+    width: 1.8vw;
     img {
       height: 100%;
       width: 100%;

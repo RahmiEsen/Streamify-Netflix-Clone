@@ -34,11 +34,10 @@ header {
       line-height: 1.2;
       cursor: pointer;
       a {
-        font-size: 14px;
-        /* font-size: .725vw; */
+        font-size: 1.02vw;
+        color: var.$header-color;
         transition: color 0.4s;
         text-decoration: none;
-        color: var.$header-color;
         &:hover {
           color: var.$header-color-hover;
         }

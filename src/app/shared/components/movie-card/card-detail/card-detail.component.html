@@ -1,5 +1,30 @@
-<app-icon-button variant="secondary" icon="play.png"> </app-icon-button>
-<app-icon-button variant="primary" tooltip="Meiner Liste hinzufügen" icon="add.png">
-</app-icon-button>
-<app-icon-button variant="primary" tooltip="Gefällt mir" icon="thumb-up.png"> </app-icon-button>
-<app-icon-button variant="primary" tooltip="Folgen und Infos" icon="down.png"> </app-icon-button>
+<div class="card">
+  <div class="card-top">
+    <img [src]="movie.imageUrl" [alt]="movie.title" />
+    <video
+      class="preview-video"
+      #videoPlayer
+      *ngIf="isVideoPlaying"
+      src="assets/detail.mp4"
+      [class.fade-out]="isVideoFadingOut"
+      playsinline
+      muted
+    ></video>
+    <div class="media-info-wrapper" *ngIf="isVideoPlaying" [class.fade-out]="isVideoFadingOut">
+      <img src="assets/logo.png" alt="Logo" />
+      <app-icon-button variant="primary" [icon]="icon" (click)="onButtonClick()"> </app-icon-button>
+    </div>
+  </div>
+  <div class="card-bottom">
+    <div class="controls-wrapper">
+      <div class="controls">
+        <app-icon-button variant="secondary" icon="play.svg"> </app-icon-button>
+        <app-icon-button variant="primary" tooltip="Meiner Liste hinzufügen" icon="add.svg">
+        </app-icon-button>
+        <app-rating-buttons></app-rating-buttons>
+      </div>
+      <app-icon-button variant="primary" tooltip="Folgen und Infos" icon="down.svg">
+      </app-icon-button>
+    </div>
+  </div>
+</div>

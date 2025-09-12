@@ -1,30 +1,37 @@
 @use '../../../shared/styles/mixins' as m;
 @use '../../../shared/styles/variables' as var;
 
+img[alt='Hero Image'] {
+  opacity: 0;
+}
+.fade-in {
+  opacity: 1 !important;
+}
+.fade-out {
+  opacity: 0 !important;
+}
+
 main {
   position: relative;
   @include m.center;
-  height: 56.25vw;
+  height: 39.75vw;
   width: 100%;
   top: 0;
   background-color: var.$black;
-  overflow: hidden;
   video,
   img {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 56.25vw;
     object-fit: cover;
+    transition: opacity 0.5s ease-in-out;
   }
   .trailer-vignette {
     position: absolute;
     top: 0;
-    bottom: 0;
+    bottom: -17vw;
     right: 26.09%;
     left: 0;
     background: linear-gradient(77deg, rgba(0, 0, 0, 0.6), transparent 85%);
@@ -33,7 +40,7 @@ main {
   }
   .hero-vignette {
     position: absolute;
-    bottom: -1px;
+    bottom: -17vw;
     height: 14.7vw;
     top: auto;
     width: 100%;

@@ -1,0 +1,17 @@
+@use '../../../styles/mixins' as m;
+@use '../../../styles/variables' as var;
+
+ul {
+  @include m.center;
+  width: fit-content;
+  li {
+    display: inline-block;
+    width: 0.75vw;
+    height: 0.085vw;
+    background-color: #4d4d4d;
+    margin-left: 0.115vw;
+    &.active {
+      background-color: #aaa;
+    }
+  }
+}
