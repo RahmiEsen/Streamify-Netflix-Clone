@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IconButtonComponent } from '../../icon-button/icon-button.component';
+import { IconButtonComponent } from '../../buttons/icon-button/icon-button.component';
 
 @Component({
   selector: 'app-age-rating',

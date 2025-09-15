@@ -1,0 +1,128 @@
+@use '../../../../shared/styles/mixins' as m;
+@use '../../../../shared/styles/variables' as var;
+
+:host {
+  display: block;
+  box-shadow: rgba(0, 0, 0, 0.75) 0px 3px 10px;
+  transition:
+    transform 0.4s cubic-bezier(0.5, 0, 0.1, 1),
+    opacity 0.4s cubic-bezier(0.5, 0, 0.1, 1);
+  transform: scale(0.9);
+  opacity: 0;
+  &.is-animated {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.card {
+  position: relative;
+  @include m.column;
+  width: 23vw;
+  background-color: var.$card-color;
+  border-radius: 6px;
+  .card-top {
+    position: relative;
+    width: 100%;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    img,
+    .preview-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.5s ease-in-out;
+    }
+    .preview-video.fade-out {
+      opacity: 0;
+    }
+    .media-info-wrapper {
+      position: absolute;
+      @include m.space;
+      width: 100%;
+      bottom: 5%;
+      padding: 0 1em;
+      img {
+        position: relative;
+        width: 40%;
+        height: auto;
+      }
+    }
+  }
+  .card-bottom {
+    @include m.column;
+    width: 100%;
+    padding: 1rem;
+    cursor: pointer;
+    .controls-wrapper {
+      @include m.space;
+      width: 100%;
+      margin: 0 0.5em;
+      .controls {
+        @include m.start-center;
+        width: 100%;
+        height: 100%;
+        gap: 0.5vw;
+      }
+    }
+    .meta-data {
+      @include m.start-center;
+      width: 100%;
+      margin: 0.8em 0;
+      gap: 0.5em;
+      span {
+        font-size: 16px;
+        color: var.$meta-data-color;
+      }
+      .quality {
+        color: #ffffffe6;
+        font-size: 0.7em;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 3px;
+        padding: 0 0.5em;
+      }
+      .fsk {
+        color: var.$white;
+        font-size: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        text-overflow: ellipsis;
+        text-transform: uppercase;
+        padding: 0 0.4em;
+        unicode-bidi: normal;
+        white-space: nowrap;
+        overflow: hidden;
+        cursor: pointer;
+      }
+      .audio-icon {
+        height: 2em;
+        width: 3.5em;
+      }
+    }
+    .evidence-list {
+      @include m.start-center;
+      width: 100%;
+      margin-bottom: 0.5em;
+      .evidence-item {
+        @include m.center;
+        .evidence-separator {
+          flex: 0 0 auto;
+          display: inline-block;
+          width: 0.35em;
+          height: 0.35em;
+          background-color: #646464;
+          border-radius: 50%;
+          margin-right: 0.5em;
+        }
+      }
+      .evidence-text {
+        font-size: 16px;
+        margin-right: 0.5em;
+      }
+    }
+  }
+}

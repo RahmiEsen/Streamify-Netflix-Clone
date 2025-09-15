@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { HeroBannerComponent } from '../../../../shared/components/hero-banner/hero-banner.component';
-import { MovieListComponent } from '../../../../shared/components/movie-list/movie-list.component';
+import { ContentRowComponent } from '../../../../shared/components/content-row/content-row.component';
 
 @Component({
   selector: 'app-series',
   standalone: true,
-  imports: [HeroBannerComponent, MovieListComponent],
+  imports: [HeroBannerComponent, ContentRowComponent],
   templateUrl: './series.component.html',
   styleUrl: './series.component.scss',
 })

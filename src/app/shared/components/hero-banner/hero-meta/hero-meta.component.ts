@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActionButtonComponent } from '../../action-button/action-button.component';
+import { ActionButtonComponent } from '../../buttons/action-button/action-button.component';
 
 @Component({
   selector: 'app-hero-meta',

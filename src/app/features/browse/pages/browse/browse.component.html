@@ -1,1 +1,9 @@
-<app-hero-banner></app-hero-banner> <app-movie-list></app-movie-list>
+<app-hero-banner></app-hero-banner>
+<app-content-row [rowTitle]="'Von der Kritik gelobte Serien'" [items]="allTestTitles">
+</app-content-row>
+<app-content-row
+  [rowTitle]="'Top-10-Filme in Deutschland heute'"
+  displayMode="ranked"
+  [items]="rankedTitles"
+>
+</app-content-row>

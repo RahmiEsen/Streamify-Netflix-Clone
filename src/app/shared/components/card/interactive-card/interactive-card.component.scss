@@ -1,0 +1,32 @@
+@use '../../../../shared/styles/mixins' as m;
+@use '../../../../shared/styles/variables' as var;
+
+:host {
+  display: block;
+}
+
+.interactive-card-wrapper {
+  position: relative;
+  width: 100%;
+  padding: 0 0.2vw;
+  z-index: 1;
+  &.is-hovered {
+    z-index: 2;
+  }
+  app-title-detail {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    &.is-first {
+      left: 0;
+      transform: translate(0, -50%);
+    }
+    &.is-last {
+      left: auto;
+      right: 0;
+      transform: translate(0, -50%);
+    }
+  }
+}

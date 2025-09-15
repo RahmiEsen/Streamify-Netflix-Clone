@@ -1,0 +1,31 @@
+<div class="slider-control">
+  <button class="nav prev" *ngIf="showPrevButton" (click)="scrollLeft()">
+    <span>&#10094;</span>
+  </button>
+  <div
+    class="slider-content"
+    [class.no-transition]="!transitionEnabled"
+    [style.transform]="transform"
+    (transitionend)="onTransitionEnd()"
+  >
+    <ng-container *ngFor="let item of displayItems; let i = index">
+      <div class="slider-item-wrapper">
+        <ng-container
+          *ngTemplateOutlet="
+            itemTemplateRef;
+            context: {
+              $implicit: item,
+              index: i,
+              isFirst: isFirst(i),
+              isLast: isLast(i),
+            }
+          "
+        >
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+  <button class="nav next" (click)="scrollRight()">
+    <span>&#10095;</span>
+  </button>
+</div>

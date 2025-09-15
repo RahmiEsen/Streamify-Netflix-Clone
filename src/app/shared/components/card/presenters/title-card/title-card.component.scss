@@ -1,0 +1,19 @@
+@use '../../../../../shared/styles/mixins' as m;
+@use '../../../../../shared/styles/variables' as var;
+
+:host {
+  display: block;
+}
+
+.card-container {
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+}
