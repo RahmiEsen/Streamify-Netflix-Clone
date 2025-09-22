@@ -16,16 +16,23 @@
   align-items: center;
 }
 
-@mixin column-center-start {
-  display: flex;
-  justify-content: center;
-  align-items: start;
-  flex-direction: column;
-}
-
 @mixin column {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+@mixin column-start {
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  flex-direction: column;
+}
+
+@mixin column-center-start {
+  display: flex;
+  justify-content: center;
+  align-items: start;
   flex-direction: column;
 }

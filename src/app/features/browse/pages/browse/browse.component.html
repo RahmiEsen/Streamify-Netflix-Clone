@@ -1,9 +1,20 @@
 <app-hero-banner></app-hero-banner>
-<app-content-row [rowTitle]="'Von der Kritik gelobte Serien'" [items]="allTestTitles">
+<app-content-row
+  [rowTitle]="'Von der Kritik gelobte Serien'"
+  [items]="allTestTitles"
+  (openModal)="handleOpenModal($event)"
+>
 </app-content-row>
 <app-content-row
   [rowTitle]="'Top-10-Filme in Deutschland heute'"
   displayMode="ranked"
   [items]="rankedTitles"
+  (openModal)="handleOpenModal($event)"
 >
 </app-content-row>
+<app-detail-modal
+  *ngIf="selectedMediaForModal"
+  [modalPayload]="selectedMediaForModal"
+  (closeModal)="closeModal()"
+>
+</app-detail-modal>

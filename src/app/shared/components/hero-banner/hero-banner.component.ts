@@ -12,8 +12,10 @@ import { AgeRatingComponent } from './age-rating/age-rating.component';
 })
 export class HeroBannerComponent implements AfterViewInit, OnDestroy {
   @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
-  isMuted = false;
+
+  isMuted = true;
   videoEnded = false;
+
   private isAudioFading = false;
   private fadeOutInterval: any;
   private readonly AUDIO_FADE_START_TIME = 2;

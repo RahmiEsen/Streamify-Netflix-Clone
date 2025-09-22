@@ -12,16 +12,27 @@
     ></video>
     <div class="media-info-wrapper" *ngIf="isVideoPlaying" [class.fade-out]="isVideoFadingOut">
       <img src="assets/logo.png" alt="Logo" />
-      <app-icon-button variant="primary" [icon]="icon" (click)="onButtonClick()"> </app-icon-button>
+      <app-icon-button
+        variant="primary"
+        [icon]="icon"
+        (click)="onButtonClick(); $event.stopPropagation()"
+      >
+      </app-icon-button>
     </div>
   </div>
-  <div class="card-bottom">
+  <div class="card-bottom" (click)="onRequestOpenModal()">
     <div class="controls-wrapper">
       <div class="controls">
-        <app-icon-button variant="secondary" icon="play.svg"> </app-icon-button>
-        <app-icon-button variant="primary" tooltip="Meiner Liste hinzufügen" icon="add.svg">
+        <app-icon-button variant="secondary" icon="play.svg" (click)="$event.stopPropagation()">
         </app-icon-button>
-        <app-rating-buttons></app-rating-buttons>
+        <app-icon-button
+          variant="primary"
+          tooltip="Meiner Liste hinzufügen"
+          icon="add.svg"
+          (click)="$event.stopPropagation()"
+        >
+        </app-icon-button>
+        <app-rating-buttons (click)="$event.stopPropagation()"></app-rating-buttons>
       </div>
       <app-icon-button variant="primary" tooltip="Folgen und Infos" icon="down.svg">
       </app-icon-button>

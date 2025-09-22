@@ -6,6 +6,8 @@ import {
   AfterViewInit,
   OnDestroy,
   ChangeDetectorRef,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Movie } from '../../../../core/models/movie.model';
@@ -22,6 +24,7 @@ import { RatingButtonsComponent } from '../../buttons/rating-buttons/rating-butt
 export class TitleDetailComponent implements AfterViewInit, OnDestroy {
   @Input({ required: true }) movie!: Movie;
   @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
+  @Output() openModalRequest = new EventEmitter<void>();
 
   isVideoPlaying = false;
   isVideoFadingOut = false;
@@ -101,5 +104,9 @@ export class TitleDetailComponent implements AfterViewInit, OnDestroy {
       videoElement.currentTime = 0;
       videoElement.play();
     }
+  }
+
+  onRequestOpenModal(): void {
+    this.openModalRequest.emit();
   }
 }

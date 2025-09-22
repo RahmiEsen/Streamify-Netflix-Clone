@@ -1,6 +1,6 @@
 <main>
   <img src="assets/test.webp" alt="Hero Image" [class.fade-in]="videoEnded" />
-  <video #videoPlayer autoplay playsinline [class.fade-out]="videoEnded">
+  <video #videoPlayer autoplay playsinline [class.fade-out]="videoEnded" muted>
     <source src="assets/test2.mp4" type="video/mp4" />
   </video>
   <div class="trailer-vignette" [class.fade-out]="videoEnded"></div>

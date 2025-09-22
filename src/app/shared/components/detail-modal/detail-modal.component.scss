@@ -1,0 +1,409 @@
+@use '../../../shared/styles/mixins' as m;
+@use '../../../shared/styles/variables' as var;
+
+.modal-overlay {
+  position: fixed;
+  @include m.center;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 2;
+  overflow-y: scroll;
+  .modal-container {
+    position: absolute;
+    @include m.column-start;
+    transform-origin: 50% 0%;
+    top: 345px;
+    min-width: 890px;
+    background-color: var.$card-color;
+    border-radius: 10px;
+    padding-bottom: 2em;
+    transform: translateX(0px) translateY(calc(2em - 345px)) scale(1) translateZ(0px);
+    box-shadow: rgba(0, 0, 0, 0.75) 0px 3px 10px;
+    overflow: hidden;
+    .close-button {
+      position: absolute;
+      @include m.center;
+      height: 36px;
+      width: 36px;
+      margin: 1em;
+      right: 0;
+      top: 0;
+      background-color: var.$card-color;
+      padding: 8px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 2;
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .modal-hero {
+      position: relative;
+      width: 100%;
+      height: 30vw;
+      top: 0;
+      .hero-image-fallback,
+      .hero-video-player {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: opacity 0.5s ease-in-out;
+      }
+      .hero-overlay {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        background: linear-gradient(0deg, #181818, transparent 50%);
+        .hero-content {
+          position: absolute;
+          @include m.column;
+          width: 40%;
+          left: 3em;
+          bottom: 5%;
+          .content-title-image {
+            width: 100%;
+            margin-bottom: 1.5em;
+          }
+          .content-actions {
+            a {
+              text-decoration: none;
+            }
+            @include m.start-center;
+            width: 100%;
+            height: 100%;
+            margin-bottom: 1em;
+            gap: 0.5vw;
+          }
+        }
+        .hero-sound-control {
+          display: block;
+          position: absolute;
+          right: 3em;
+          bottom: 5%;
+          margin-bottom: 1em;
+          transition: opacity 0.3s ease-in-out;
+          opacity: 0.4;
+          &:hover {
+            opacity: 1;
+          }
+        }
+      }
+    }
+    .modal-body {
+      @include m.column-start;
+      width: 100%;
+      /* height: 50vw; */
+      padding: 0 3em;
+      .details-view-grid {
+        display: grid;
+        column-gap: 2em;
+        grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+        width: 100%;
+        .details-view-main {
+          @include m.column;
+          width: 100%;
+          gap: 0.5em;
+          .meta-bar {
+            @include m.start-center;
+            width: 100%;
+            gap: 0.5em;
+            span {
+              font-size: 16px;
+              color: var.$meta-data-color;
+            }
+            .quality {
+              color: #ffffffe6;
+              font-size: 0.7em;
+              border: 1px solid rgba(255, 255, 255, 0.4);
+              border-radius: 3px;
+              padding: 0 0.5em;
+            }
+            .audio-icon {
+              height: 2em;
+              width: 3.5em;
+            }
+            .audio-desc-icon {
+              height: 2em;
+              width: 2em;
+            }
+          }
+          .episode-info-title {
+            width: 100%;
+            font-size: 20px;
+          }
+          .episode-info-description {
+            width: min-content;
+            min-width: 100%;
+            font-size: 16px;
+            line-height: 26px;
+          }
+        }
+        .details-view-sidebar {
+          @include m.column-start;
+          width: 100%;
+          .info-list {
+            width: min-content;
+            min-width: 100%;
+            font-size: 14px;
+            line-height: 20px;
+            margin: 0.5em 0.5em 0.5em 0;
+            word-break: break-word;
+            .tag-label {
+              color: #777;
+            }
+            span {
+              margin-right: 0.5em;
+            }
+            a {
+              color: var.$white;
+              text-decoration: none;
+              margin: 0;
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+            .tag-more {
+              font-style: italic;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.episode-selector {
+  padding: 1em 0 0;
+  width: 100%;
+  .episode-selector-header {
+    position: relative;
+    @include m.space;
+    h3 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      margin-top: 32px;
+    }
+    .dropdown-toggle {
+      @include m.center;
+      min-width: 4em;
+      font-size: 1.125em;
+      background-color: var.$dropdown-color;
+      border-radius: 0.2em;
+      border: 0.1em solid var.$dropdown-border-color;
+      padding: 0.5em 1em;
+      cursor: pointer;
+      span {
+        color: var.$white;
+        font-weight: 600;
+      }
+      &::after {
+        content: '';
+        border-left: 0.3em solid transparent;
+        border-right: 0.3em solid transparent;
+        border-top: 0.4em solid rgb(255, 255, 255);
+        transition: transform 0.2s linear;
+        margin-left: 2em;
+        transform: none;
+      }
+    }
+    .dropdown-menu {
+      position: absolute;
+      @include m.column;
+      min-width: 4em;
+      max-height: max(10em, 359.719px - 2rem);
+      right: 0;
+      top: 3.4em;
+      color: var.$white;
+      font-size: 1.125em;
+      background-color: var.$dropdown-color;
+      border: 0.1em solid var.$dropdown-border-color;
+      padding: 1rem 0px;
+      white-space: nowrap;
+      list-style-type: none;
+      overflow: auto;
+      z-index: 1;
+      cursor: pointer;
+      li {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        min-width: 4em;
+        padding: 0.5em 0.8em;
+        .season-selector-option-title {
+          font-size: 18px;
+          font-weight: 600;
+        }
+        .season-selector-option-detail {
+          font-size: 14px;
+          font-weight: 400;
+        }
+        &:hover {
+          background-color: #424242;
+        }
+      }
+    }
+  }
+  .is-open {
+    .dropdown-toggle::after {
+      transform: rotate(180deg);
+    }
+  }
+  .episode-selector-content {
+    .selected-season {
+      @include m.start-center;
+      line-height: 1.5;
+      margin-top: 0.1rem;
+      margin-bottom: 8px;
+      overflow: hidden;
+      .season {
+        font-size: 14px;
+        font-weight: 500;
+        margin-right: 8px;
+      }
+      .content-attributes {
+        width: unset;
+        margin: unset;
+      }
+    }
+  }
+}
+
+.episode-list-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 8em;
+  border-bottom: 1px solid #404040;
+  border-radius: 0.25em;
+  overflow: hidden;
+  padding: 1em;
+  cursor: pointer;
+  .episode-item-number {
+    flex: 0 0 7%;
+    display: flex;
+    justify-content: center;
+    color: #d2d2d2;
+    font-size: 1.5em;
+  }
+  .episode-item-thumbnail {
+    position: relative;
+    flex: 0 0 18%;
+    border-radius: 4px;
+    overflow: hidden;
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    .thumbnail-overlay {
+      position: absolute;
+      @include m.center;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background-image: linear-gradient(
+        195deg,
+        hsla(0, 0%, 9%, 0.7),
+        hsla(0, 0%, 9%, 0.5) 10%,
+        transparent 25%
+      );
+      .thumbnail-play-button {
+        @include m.center;
+        height: 3em;
+        width: 3em;
+        background-color: rgba(30, 30, 20, 0.5);
+        border: 1px solid #fff;
+        border-radius: 50%;
+        padding: 0.5em;
+        opacity: 0;
+        transition: opacity 0.2s ease-in;
+      }
+    }
+  }
+  .episode-item-meta {
+    flex: 0 0 70%;
+    width: min-content;
+    min-height: 100%;
+    font-size: 1em;
+    .episode-item-header {
+      display: flex;
+      justify-content: space-between;
+      padding: 1em 1em 0.5em;
+      span {
+        color: var.$white;
+        font-size: 16px;
+        font-weight: 600;
+      }
+      .episode-item-duration {
+        font-weight: 500;
+      }
+    }
+    .episode-item-description {
+      color: #d2d2d2;
+      padding: 0 1em 1em;
+      margin: 0;
+    }
+  }
+  &:hover .episode-item-thumbnail .thumbnail-overlay .thumbnail-play-button {
+    opacity: 1;
+  }
+}
+
+.content-attributes {
+  width: 100%;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-top: 0.1rem;
+  margin-bottom: 8px;
+  .fsk {
+    color: var.$white;
+    font-size: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    padding: 0 0.4em;
+    unicode-bidi: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: pointer;
+    span {
+      font-size: 16px;
+      color: var.$meta-data-color;
+    }
+  }
+}
+
+.fade-in {
+  opacity: 1 !important;
+  transition: opacity 0.4s ease-in;
+}
+
+.fade-out {
+  opacity: 0 !important;
+  transition: opacity 0.4s ease-out;
+}
+
+:host ::ng-deep app-action-button button {
+  margin: 0 0.7vw 0 0 !important;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #808080;
+}

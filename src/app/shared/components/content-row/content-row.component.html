@@ -8,7 +8,6 @@
   </app-row-header>
   <app-slider-control
     [items]="items"
-    [style.--visible]="visibleItems"
     [scrollMode]="displayMode"
     (rowHoverStateChange)="onCardHoverChange($event)"
     (pagesInitialized)="onPagesInitialized($event)"
@@ -20,6 +19,7 @@
         [isFirst]="isFirst"
         [isLast]="isLast"
         (hoverStateChange)="onCardHoverChange($event)"
+        (openModal)="onOpenModal($event)"
       >
         <ng-container *ngIf="displayMode === 'default'">
           <app-title-card [movie]="movie"></app-title-card>

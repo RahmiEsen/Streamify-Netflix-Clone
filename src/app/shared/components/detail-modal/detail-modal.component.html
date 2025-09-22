@@ -1,1 +1,158 @@
-<p>detail-modal works!</p>
+<div class="modal-overlay" [@overlayAnimation] (click)="onClose()">
+  <div
+    class="modal-container"
+    [@modalAnimation]="animationParams"
+    (click)="$event.stopPropagation()"
+  >
+    <button class="close-button" (click)="onClose()">
+      <img src="assets/button/close.svg" alt="close" />
+    </button>
+    <div class="modal-hero">
+      <img
+        class="hero-image-fallback"
+        src="assets/test5.webp"
+        alt="Hero Image"
+        [class.fade-in]="videoEnded"
+      />
+      <!-- <video class="hero-video-player"
+                #videoPlayer
+                autoplay
+                playsinline
+                muted
+                [class.fade-out]="videoEnded">
+                <source src="assets/detail.mp4" type="video/mp4" />
+            </video> -->
+      <div class="hero-overlay">
+        <div class="hero-content">
+          <img class="content-title-image" src="assets/test6.webp" alt="Titel" />
+          <div class="content-actions">
+            <app-action-button variant="primary" icon="play.svg" text="Abspielen">
+            </app-action-button>
+            <app-icon-button variant="primary" icon="add.svg"> </app-icon-button>
+            <app-rating-buttons></app-rating-buttons>
+          </div>
+        </div>
+        <app-icon-button
+          class="hero-sound-control"
+          variant="primary"
+          [icon]="icon"
+          (click)="onButtonClick(); $event.stopPropagation()"
+        >
+        </app-icon-button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="details-view-grid">
+        <div class="details-view-main">
+          <div class="meta-bar">
+            <span class="year">2024</span>
+            <span class="duration">9 Staffeln</span>
+            <span class="quality">HD</span>
+            <img class="audio-icon" src="assets/icons/3d-audio.svg" alt="" />
+            <img class="subtitle-icon" src="assets/icons/subtitle.svg" alt="" />
+            <img class="audio-desc-icon" src="assets/icons/audio-description.svg" alt="" />
+          </div>
+          <div class="content-attributes">
+            <span class="fsk">12</span>
+          </div>
+          <p class="episode-info-title">
+            <b>St. 1: Flg. 1</b>
+            „Folge 1“
+          </p>
+          <p class="episode-info-description">
+            Dexter Morgan, ein Forensiker, der ein Doppelleben als Killer von nicht verurteilten
+            Kriminellen führt, ist von der Arbeit eines neuen Serienmörders beeindruckt.
+          </p>
+        </div>
+        <div class="details-view-sidebar">
+          <div class="info-list">
+            <span class="tag-label">Besetzung:</span>
+            <a href="#">
+              <span class="tag-item">Bryan Cranston,</span>
+            </a>
+            <a href="#">
+              <span class="tag-item">Aaron Paul,</span>
+            </a>
+            <a href="#">
+              <span class="tag-item">Anna Gunn,</span>
+            </a>
+            <a href="#">
+              <span class="tag-more">mehr</span>
+            </a>
+          </div>
+          <div class="info-list">
+            <span class="tag-label">Genres:</span>
+            <a href="#">
+              <span class="tag-item">Dramaserien,</span>
+            </a>
+            <a href="#">
+              <span class="tag-item">Krimiserien,</span>
+            </a>
+            <a href="#">
+              <span class="tag-item">US-Serien</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="episode-selector">
+        <div class="episode-selector-header" [class.is-open]="isOpen">
+          <h3>Folgen</h3>
+          <button
+            class="dropdown-toggle"
+            (click)="toggleDropdown()"
+            type="button"
+            aria-haspopup="listbox"
+            [attr.aria-expanded]="isOpen"
+          >
+            <span>Staffel 1</span>
+          </button>
+          <ul class="dropdown-menu" role="listbox" *ngIf="isOpen">
+            <li role="option" *ngFor="let season of seasons">
+              <span class="season-selector-option-title"> Staffel {{ season.number }} </span>
+              &nbsp;&nbsp;
+              <span class="season-selector-option-detail">
+                ({{ season.episodeCount }} Folgen)
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="episode-selector-content">
+          <div class="selected-season">
+            <span class="season">Staffel 1:</span>
+            <div class="content-attributes">
+              <span class="fsk">12</span>
+            </div>
+          </div>
+          <div class="episode-list">
+            <div class="episode-list-item" *ngFor="let episode of episodes">
+              <span class="episode-item-number">
+                {{ episode.number }}
+              </span>
+              <div class="episode-item-thumbnail">
+                <img [src]="episode.thumbnailUrl" [alt]="'Vorschaubild für ' + episode.title" />
+                <div class="thumbnail-overlay">
+                  <div class="thumbnail-play-button">
+                    <img src="assets/button/play-secondary.svg" alt="Play" />
+                  </div>
+                </div>
+              </div>
+              <div class="episode-item-meta">
+                <div class="episode-item-header">
+                  <span class="episode-item-title">
+                    {{ episode.title }}
+                  </span>
+                  <span class="episode-item-duration">
+                    {{ episode.duration }}
+                  </span>
+                </div>
+                <p class="episode-item-description">
+                  {{ episode.description }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

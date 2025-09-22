@@ -1,3 +1,7 @@
 @use './app/shared/styles/base';
 @use './app/shared/styles/variables';
 @use './app/shared/styles/typography';
+
+body.modal-open {
+  overflow: hidden;
+}

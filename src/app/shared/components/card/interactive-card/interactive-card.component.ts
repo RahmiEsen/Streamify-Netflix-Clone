@@ -1,7 +1,19 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectorRef,
+  ElementRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TitleDetailComponent } from '../title-detail/title-detail.component';
 import { Movie } from '../../../../core/models/movie.model';
+
+export interface OpenModalPayload {
+  movie: Movie;
+  originBounds: DOMRect;
+}
 
 @Component({
   selector: 'app-interactive-card',
@@ -15,6 +27,7 @@ export class InteractiveCardComponent {
   @Input() isFirst: boolean = false;
   @Input() isLast: boolean = false;
   @Output() hoverStateChange = new EventEmitter<boolean>();
+  @Output() openModal = new EventEmitter<OpenModalPayload>();
 
   isHovered = false;
   isAnimationReady = false;
@@ -22,7 +35,15 @@ export class InteractiveCardComponent {
   private openTimer: any;
   private closeTimer: any;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private elementRef: ElementRef
+  ) {}
+
+  requestOpenModal(): void {
+    const originBounds = this.elementRef.nativeElement.getBoundingClientRect();
+    this.openModal.emit({ movie: this.movie, originBounds: originBounds });
+  }
 
   onMouseEnter(): void {
     clearTimeout(this.closeTimer);
