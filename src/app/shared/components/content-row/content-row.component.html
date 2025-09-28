@@ -2,8 +2,8 @@
   <app-row-header
     [title]="rowTitle"
     [displayMode]="displayMode"
-    [totalPages]="sliderTotalPages"
-    [currentPage]="sliderCurrentPage"
+    [totalPages]="(sliderTotalPages$ | async) ?? 0"
+    [currentPage]="((sliderTotalPages$ | async) ?? 0) > 0 ? ((sliderCurrentPage$ | async) ?? 0) : 0"
   >
   </app-row-header>
   <app-slider-control
@@ -13,19 +13,24 @@
     (pagesInitialized)="onPagesInitialized($event)"
     (pageChange)="onPageChange($event)"
   >
-    <ng-template #itemTemplate let-movie let-i="index" let-isFirst="isFirst" let-isLast="isLast">
+    <ng-template #itemTemplate let-item let-i="index" let-isFirst="isFirst" let-isLast="isLast">
       <app-interactive-card
-        [movie]="movie"
+        [movie]="displayMode === 'ranked' ? item.movie : item"
         [isFirst]="isFirst"
         [isLast]="isLast"
         (hoverStateChange)="onCardHoverChange($event)"
         (openModal)="onOpenModal($event)"
       >
         <ng-container *ngIf="displayMode === 'default'">
-          <app-title-card [movie]="movie"></app-title-card>
+          <app-title-card
+            [imageUrl]="imageBaseUrl + item.backdrop_path"
+            [title]="item.title"
+            [logoUrl]="item.logoUrl ? imageBaseUrl + item.logoUrl : ''"
+          >
+          </app-title-card>
         </ng-container>
         <ng-container *ngIf="displayMode === 'ranked'">
-          <app-ranked-card [item]="movie"></app-ranked-card>
+          <app-ranked-card [item]="item" [imageBaseUrl]="imageBaseUrl"> </app-ranked-card>
         </ng-container>
       </app-interactive-card>
     </ng-template>

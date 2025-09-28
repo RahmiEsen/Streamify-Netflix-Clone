@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { RowHeaderComponent } from './row-header/row-header.component';
 import { CommonModule } from '@angular/common';
 import { Movie } from '../../../core/models/movie.model';
@@ -11,6 +11,8 @@ import {
 } from '../card/interactive-card/interactive-card.component';
 import { RankedCardComponent } from '../card/presenters/ranked-card/ranked-card.component';
 import { RankedItem } from '../../../features/browse/pages/browse/browse.component';
+import { TMDB_CONFIG } from '../../../core/constants/api.constants';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-content-row',
@@ -25,6 +27,7 @@ import { RankedItem } from '../../../features/browse/pages/browse/browse.compone
   ],
   templateUrl: './content-row.component.html',
   styleUrl: './content-row.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContentRowComponent {
   @Input() rowTitle: string = '';
@@ -33,8 +36,13 @@ export class ContentRowComponent {
   @Output() openModal = new EventEmitter<OpenModalPayload>();
 
   isRowHovered = false;
-  sliderTotalPages = 0;
-  sliderCurrentPage = 0;
+  imageBaseUrl = TMDB_CONFIG.IMG_URL;
+
+  private readonly sliderTotalPages$$ = new BehaviorSubject<number>(0);
+  public readonly sliderTotalPages$ = this.sliderTotalPages$$.asObservable();
+
+  private readonly sliderCurrentPage$$ = new BehaviorSubject<number>(0);
+  public readonly sliderCurrentPage$ = this.sliderCurrentPage$$.asObservable();
 
   onOpenModal(payload: OpenModalPayload): void {
     this.openModal.emit(payload);
@@ -45,12 +53,10 @@ export class ContentRowComponent {
   }
 
   onPagesInitialized(totalPages: number): void {
-    setTimeout(() => {
-      this.sliderTotalPages = totalPages;
-    });
+    this.sliderTotalPages$$.next(totalPages);
   }
 
   onPageChange(currentPage: number): void {
-    this.sliderCurrentPage = currentPage;
+    this.sliderCurrentPage$$.next(currentPage);
   }
 }

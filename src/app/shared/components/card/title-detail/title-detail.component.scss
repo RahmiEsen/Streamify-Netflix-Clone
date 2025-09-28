@@ -19,7 +19,6 @@
   position: relative;
   @include m.column;
   width: 23vw;
-  /* width: 329px; */
   background-color: var.$card-color;
   border-radius: 6px;
   .card-top {
@@ -45,13 +44,17 @@
     .media-info-wrapper {
       position: absolute;
       @include m.space;
+      align-items: end !important;
       width: 100%;
+      height: 40%;
       bottom: 5%;
       padding: 0 1em;
       img {
         position: relative;
         width: 40%;
-        height: auto;
+        height: 100%;
+        left: 0;
+        object-fit: contain;
       }
     }
   }
@@ -77,19 +80,22 @@
       margin: 0.8em 0;
       gap: 0.5em;
       span {
-        font-size: 16px;
+        font-size: 1vw;
         color: var.$meta-data-color;
       }
       .quality {
         color: #ffffffe6;
-        font-size: 0.7em;
+        font-size: 1vw;
         border: 1px solid rgba(255, 255, 255, 0.4);
         border-radius: 3px;
         padding: 0 0.5em;
       }
+      .duration {
+        font-size: 1vw;
+      }
       .fsk {
         color: var.$white;
-        font-size: 14px;
+        font-size: 1vw;
         border: 1px solid rgba(255, 255, 255, 0.4);
         text-overflow: ellipsis;
         text-transform: uppercase;
@@ -121,9 +127,15 @@
         }
       }
       .evidence-text {
-        font-size: 16px;
+        font-size: 1vw;
         margin-right: 0.5em;
       }
     }
+  }
+}
+
+@media (max-width: 1400px) {
+  .card {
+    width: 30vw;
   }
 }

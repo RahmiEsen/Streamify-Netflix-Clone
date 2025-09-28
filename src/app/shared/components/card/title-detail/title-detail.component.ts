@@ -8,11 +8,13 @@ import {
   ChangeDetectorRef,
   Output,
   EventEmitter,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Movie } from '../../../../core/models/movie.model';
+import { EnrichedMovie, Movie } from '../../../../core/models/movie.model';
 import { IconButtonComponent } from '../../buttons/icon-button/icon-button.component';
 import { RatingButtonsComponent } from '../../buttons/rating-buttons/rating-buttons.component';
+import { TMDB_CONFIG } from '../../../../core/constants/api.constants';
 
 @Component({
   selector: 'app-title-detail',
@@ -20,9 +22,10 @@ import { RatingButtonsComponent } from '../../buttons/rating-buttons/rating-butt
   imports: [CommonModule, IconButtonComponent, RatingButtonsComponent],
   templateUrl: './title-detail.component.html',
   styleUrl: './title-detail.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TitleDetailComponent implements AfterViewInit, OnDestroy {
-  @Input({ required: true }) movie!: Movie;
+  @Input({ required: true }) movie!: EnrichedMovie;
   @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
   @Output() openModalRequest = new EventEmitter<void>();
 
@@ -30,6 +33,7 @@ export class TitleDetailComponent implements AfterViewInit, OnDestroy {
   isVideoFadingOut = false;
   isMuted = true;
   videoEnded = false;
+  imageBaseUrl = TMDB_CONFIG.IMG_URL;
 
   private onVideoEndedHandler: () => void;
 
@@ -108,5 +112,22 @@ export class TitleDetailComponent implements AfterViewInit, OnDestroy {
 
   onRequestOpenModal(): void {
     this.openModalRequest.emit();
+  }
+
+  get formattedRuntime(): string {
+    if (!this.movie?.runtime) {
+      return '';
+    }
+    const hours = Math.floor(this.movie.runtime / 60);
+    const minutes = this.movie.runtime % 60;
+    return `${hours} Std. ${minutes} Min.`;
+  }
+
+  get show3DAudio(): boolean {
+    if (!this.movie?.release_date) {
+      return false;
+    }
+    const releaseYear = new Date(this.movie.release_date).getFullYear();
+    return releaseYear >= 2017;
   }
 }

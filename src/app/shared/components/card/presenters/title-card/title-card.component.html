@@ -1,3 +1,6 @@
 <div class="card-container">
-  <img [src]="movie.imageUrl" [alt]="movie.title" />
+  <img [src]="imageUrl" [alt]="title" />
+  <div *ngIf="logoUrl" class="card-logo">
+    <img [src]="logoUrl" [alt]="title + ' Logo'" />
+  </div>
 </div>

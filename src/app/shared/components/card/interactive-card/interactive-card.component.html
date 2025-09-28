@@ -6,8 +6,8 @@
 >
   <ng-content></ng-content>
   <app-title-detail
-    *ngIf="isHovered"
-    [movie]="movie"
+    *ngIf="isHovered && detailedMovie"
+    [movie]="detailedMovie"
     [class.is-animated]="isAnimationReady"
     [class.is-first]="isFirst"
     [class.is-last]="isLast"

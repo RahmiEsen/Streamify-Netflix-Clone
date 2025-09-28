@@ -6,8 +6,8 @@ ul {
   width: fit-content;
   li {
     display: inline-block;
-    width: 0.75vw;
-    height: 0.085vw;
+    width: 12px;
+    height: 2px;
     background-color: #4d4d4d;
     margin-left: 0.115vw;
     &.active {

@@ -4,14 +4,11 @@
 main {
   position: relative;
   @include m.column-center-start;
-  height: 26vw;
-  margin: -3vw 0 -10vw;
+  margin: 3vw 0;
   gap: 10px;
-  z-index: 1;
   --icon-opacity: 0;
   --icon-transform: translateX(-0px);
   --text-opacity: 0;
-  overflow: hidden;
   .slider {
     position: relative;
     @include m.start-center;

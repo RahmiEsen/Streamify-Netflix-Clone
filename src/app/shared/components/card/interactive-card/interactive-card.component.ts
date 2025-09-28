@@ -8,7 +8,8 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TitleDetailComponent } from '../title-detail/title-detail.component';
-import { Movie } from '../../../../core/models/movie.model';
+import { EnrichedMovie, Movie } from '../../../../core/models/movie.model';
+import { MovieApiService } from '../../../../core/services/api/movie-api.service';
 
 export interface OpenModalPayload {
   movie: Movie;
@@ -31,25 +32,39 @@ export class InteractiveCardComponent {
 
   isHovered = false;
   isAnimationReady = false;
+  detailedMovie: EnrichedMovie | null = null;
 
   private openTimer: any;
   private closeTimer: any;
 
   constructor(
     private cdr: ChangeDetectorRef,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private movieApi: MovieApiService
   ) {}
 
   requestOpenModal(): void {
     const originBounds = this.elementRef.nativeElement.getBoundingClientRect();
-    this.openModal.emit({ movie: this.movie, originBounds: originBounds });
+    this.openModal.emit({ movie: this.detailedMovie || this.movie, originBounds: originBounds });
   }
 
   onMouseEnter(): void {
+    if (window.innerWidth < 1025) {
+      return;
+    }
     clearTimeout(this.closeTimer);
     this.openTimer = setTimeout(() => {
       this.isHovered = true;
       this.hoverStateChange.emit(true);
+      if (!this.detailedMovie) {
+        this.movieApi.getMovieDetails(this.movie.id).subscribe((details) => {
+          this.detailedMovie = {
+            ...this.movie,
+            ...details,
+          };
+          this.cdr.detectChanges();
+        });
+      }
       this.cdr.detectChanges();
       setTimeout(() => {
         this.isAnimationReady = true;

@@ -15,8 +15,7 @@ import { NavLink } from '../../models/nav-link.model';
 })
 export class HeaderComponent {
   private readonly navigationService = inject(NavigationService);
-  public readonly navLinks$: Observable<ReadonlyArray<NavLink>> =
-    this.navigationService.getMainNavLinks();
+  public readonly navLinks: ReadonlyArray<NavLink> = this.navigationService.getMainNavLinks();
   public isScrolled = false;
 
   @HostListener('window:scroll')

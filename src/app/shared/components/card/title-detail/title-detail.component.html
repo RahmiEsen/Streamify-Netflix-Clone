@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-top">
-    <img [src]="movie.imageUrl" [alt]="movie.title" />
-    <video
+    <img [src]="movie.backdropUrl || imageBaseUrl + movie.poster_path" [alt]="movie.title" />
+    <!-- <video
       class="preview-video"
       #videoPlayer
       *ngIf="isVideoPlaying"
@@ -9,9 +9,9 @@
       [class.fade-out]="isVideoFadingOut"
       playsinline
       muted
-    ></video>
-    <div class="media-info-wrapper" *ngIf="isVideoPlaying" [class.fade-out]="isVideoFadingOut">
-      <img src="assets/logo.png" alt="Logo" />
+    ></video>  -->
+    <div class="media-info-wrapper" [class.fade-out]="isVideoFadingOut">
+      <img [src]="imageBaseUrl + movie.logoUrl" alt="{{ movie.title }} Logo" />
       <app-icon-button
         variant="primary"
         [icon]="icon"
@@ -38,21 +38,19 @@
       </app-icon-button>
     </div>
     <div class="meta-data">
-      <span class="fsk">12</span>
-      <span class="duration">9 Staffeln</span>
+      <span class="fsk">{{ movie.certification || 'k.A.' }}</span>
+      <span class="duration">{{ formattedRuntime }}</span>
       <span class="quality">HD</span>
-      <img class="audio-icon" src="assets/icons/3d-audio.svg" alt="" />
+      <img *ngIf="show3DAudio" class="audio-icon" src="assets/icons/3d-audio.svg" alt="3D Audio" />
     </div>
-    <div class="evidence-list">
-      <span class="evidence-text">Düster</span>
-      <div class="evidence-item">
-        <span class="evidence-separator"></span>
-        <span class="evidence-text">Mystery</span>
-      </div>
-      <div class="evidence-item">
-        <span class="evidence-separator"></span>
-        <span class="evidence-text">Forensik</span>
-      </div>
+    <div class="evidence-list" *ngIf="movie.keywords && movie.keywords.length > 0">
+      <span class="evidence-text">{{ movie.keywords[0].name }}</span>
+      <ng-container *ngFor="let keyword of movie.keywords.slice(1)">
+        <div class="evidence-item">
+          <span class="evidence-separator"></span>
+          <span class="evidence-text">{{ keyword.name }}</span>
+        </div>
+      </ng-container>
     </div>
   </div>
 </div>

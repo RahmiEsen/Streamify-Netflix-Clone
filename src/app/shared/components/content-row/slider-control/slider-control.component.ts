@@ -12,15 +12,18 @@ import {
   PLATFORM_ID,
   ContentChild,
   TemplateRef,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-slider-control',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ScrollingModule],
   templateUrl: './slider-control.component.html',
   styleUrls: ['./slider-control.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SliderControlComponent implements OnChanges, AfterViewInit {
   @Input() items: any[] = [];
@@ -55,10 +58,8 @@ export class SliderControlComponent implements OnChanges, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.updateItemsPerPage();
-      this.reinitializeSlider();
-    });
+    this.updateItemsPerPage();
+    this.reinitializeSlider();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -77,7 +78,10 @@ export class SliderControlComponent implements OnChanges, AfterViewInit {
     this.currentPage = 0;
     this.setupInitialDisplayItems();
     this.updateTransform();
-    this.pagesInitialized.emit(this.totalPages);
+
+    Promise.resolve().then(() => {
+      this.pagesInitialized.emit(this.totalPages);
+    });
     this.pageChange.emit(this.currentPage);
   }
 
