@@ -12,5 +12,5 @@ import { RankedItem } from '../../../../../features/browse/pages/browse/browse.c
 })
 export class RankedCardComponent {
   @Input({ required: true }) item!: RankedItem;
-  @Input({ required: true }) imageBaseUrl!: string;
+  /* @Input({ required: true }) imageBaseUrl!: string; */
 }

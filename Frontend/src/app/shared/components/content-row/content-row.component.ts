@@ -4,14 +4,13 @@ import { CommonModule } from '@angular/common';
 import { Movie } from '../../../core/models/movie.model';
 import { SliderControlComponent } from './slider-control/slider-control.component';
 import { TitleCardComponent } from '../card/presenters/title-card/title-card.component';
-// NEU: OpenModalPayload importieren, damit diese Komponente weiß, welche Daten sie empfängt
 import {
   InteractiveCardComponent,
   OpenModalPayload,
 } from '../card/interactive-card/interactive-card.component';
 import { RankedCardComponent } from '../card/presenters/ranked-card/ranked-card.component';
 import { RankedItem } from '../../../features/browse/pages/browse/browse.component';
-import { TMDB_CONFIG } from '../../../core/constants/api.constants';
+/* import { TMDB_CONFIG } from '../../../core/constants/api.constants'; */
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -36,7 +35,7 @@ export class ContentRowComponent {
   @Output() openModal = new EventEmitter<OpenModalPayload>();
 
   isRowHovered = false;
-  imageBaseUrl = TMDB_CONFIG.IMG_URL;
+  /* imageBaseUrl = TMDB_CONFIG.IMG_URL; */
 
   private readonly sliderTotalPages$$ = new BehaviorSubject<number>(0);
   public readonly sliderTotalPages$ = this.sliderTotalPages$$.asObservable();

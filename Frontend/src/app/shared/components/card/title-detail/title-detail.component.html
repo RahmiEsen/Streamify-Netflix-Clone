@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-top">
-    <img [src]="movie.backdropUrl || imageBaseUrl + movie.poster_path" [alt]="movie.title" />
+    <!-- <img [src]="movie.backdropUrl || imageBaseUrl + movie.poster_path" [alt]="movie.title" /> -->
     <!-- <video
       class="preview-video"
       #videoPlayer
@@ -11,7 +11,7 @@
       muted
     ></video>  -->
     <div class="media-info-wrapper" [class.fade-out]="isVideoFadingOut">
-      <img [src]="imageBaseUrl + movie.logoUrl" alt="{{ movie.title }} Logo" />
+      <!-- <img [src]="imageBaseUrl + movie.logoUrl" alt="{{ movie.title }} Logo" /> -->
       <app-icon-button
         variant="primary"
         [icon]="icon"
@@ -38,7 +38,7 @@
       </app-icon-button>
     </div>
     <div class="meta-data">
-      <span class="fsk">{{ movie.certification || 'k.A.' }}</span>
+      <!-- <span class="fsk">{{ movie.certification || 'k.A.' }}</span> -->
       <span class="duration">{{ formattedRuntime }}</span>
       <span class="quality">HD</span>
       <img *ngIf="show3DAudio" class="audio-icon" src="assets/icons/3d-audio.svg" alt="3D Audio" />

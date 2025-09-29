@@ -23,14 +23,14 @@
       >
         <ng-container *ngIf="displayMode === 'default'">
           <app-title-card
-            [imageUrl]="imageBaseUrl + item.backdrop_path"
+            [imageUrl]="item.backdropUrl"
             [title]="item.title"
-            [logoUrl]="item.logoUrl ? imageBaseUrl + item.logoUrl : ''"
+            [logoUrl]="item.logoUrl"
           >
           </app-title-card>
         </ng-container>
         <ng-container *ngIf="displayMode === 'ranked'">
-          <app-ranked-card [item]="item" [imageBaseUrl]="imageBaseUrl"> </app-ranked-card>
+          <app-ranked-card [item]="item"> </app-ranked-card>
         </ng-container>
       </app-interactive-card>
     </ng-template>

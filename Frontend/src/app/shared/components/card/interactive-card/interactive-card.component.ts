@@ -8,8 +8,9 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TitleDetailComponent } from '../title-detail/title-detail.component';
-import { EnrichedMovie, Movie } from '../../../../core/models/movie.model';
-import { MovieApiService } from '../../../../core/services/api/movie-api.service';
+import { Movie } from '../../../../core/models/movie.model';
+import { GraphQLService } from '../../../../core/services/graphql.service';
+import { map } from 'rxjs';
 
 export interface OpenModalPayload {
   movie: Movie;
@@ -32,7 +33,7 @@ export class InteractiveCardComponent {
 
   isHovered = false;
   isAnimationReady = false;
-  detailedMovie: EnrichedMovie | null = null;
+  detailedMovie: Movie | null = null;
 
   private openTimer: any;
   private closeTimer: any;
@@ -40,7 +41,7 @@ export class InteractiveCardComponent {
   constructor(
     private cdr: ChangeDetectorRef,
     private elementRef: ElementRef,
-    private movieApi: MovieApiService
+    private graphqlService: GraphQLService
   ) {}
 
   requestOpenModal(): void {
@@ -57,13 +58,13 @@ export class InteractiveCardComponent {
       this.isHovered = true;
       this.hoverStateChange.emit(true);
       if (!this.detailedMovie) {
-        this.movieApi.getMovieDetails(this.movie.id).subscribe((details) => {
-          this.detailedMovie = {
-            ...this.movie,
-            ...details,
-          };
-          this.cdr.detectChanges();
-        });
+        this.graphqlService
+          .getMovieDetails(this.movie.id)
+          .pipe(map((response) => response.data.movie))
+          .subscribe((details) => {
+            this.detailedMovie = details;
+            this.cdr.detectChanges();
+          });
       }
       this.cdr.detectChanges();
       setTimeout(() => {
