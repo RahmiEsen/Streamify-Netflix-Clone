@@ -1,7 +1,7 @@
 @use '../../../shared/styles/mixins' as m;
 @use '../../../shared/styles/variables' as var;
 
-img[alt='Hero Image'] {
+/* img[alt='Hero Image'] {
   opacity: 0;
 }
 .fade-in {
@@ -9,7 +9,7 @@ img[alt='Hero Image'] {
 }
 .fade-out {
   opacity: 0 !important;
-}
+} */
 
 main {
   position: relative;
@@ -59,4 +59,9 @@ main {
     background-size: 100% 100%;
     opacity: 1;
   }
+}
+
+@media (min-width: 500px) {
+  /* main {
+  } */
 }

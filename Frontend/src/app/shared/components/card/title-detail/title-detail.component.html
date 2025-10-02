@@ -1,7 +1,11 @@
-<div class="card">
+<div class="card" *ngIf="movie">
   <div class="card-top">
-    <!-- <img [src]="movie.backdropUrl || imageBaseUrl + movie.poster_path" [alt]="movie.title" /> -->
-    <!-- <video
+    <img
+      [src]="movie.backdrops && movie.backdrops.length > 1 ? movie.backdrops[1] : movie.backdropUrl"
+      [alt]="movie.title"
+    />
+
+    <video
       class="preview-video"
       #videoPlayer
       *ngIf="isVideoPlaying"
@@ -9,9 +13,16 @@
       [class.fade-out]="isVideoFadingOut"
       playsinline
       muted
-    ></video>  -->
+    ></video>
+
     <div class="media-info-wrapper" [class.fade-out]="isVideoFadingOut">
-      <!-- <img [src]="imageBaseUrl + movie.logoUrl" alt="{{ movie.title }} Logo" /> -->
+      <img
+        *ngIf="movie.logoUrl"
+        [src]="movie.logoUrl"
+        alt="{{ movie.title }} Logo"
+        class="title-logo"
+      />
+
       <app-icon-button
         variant="primary"
         [icon]="icon"
@@ -20,6 +31,7 @@
       </app-icon-button>
     </div>
   </div>
+
   <div class="card-bottom" (click)="onRequestOpenModal()">
     <div class="controls-wrapper">
       <div class="controls">
@@ -38,17 +50,17 @@
       </app-icon-button>
     </div>
     <div class="meta-data">
-      <!-- <span class="fsk">{{ movie.certification || 'k.A.' }}</span> -->
+      <span class="fsk">{{ movie.fsk || 'k.A.' }}</span>
       <span class="duration">{{ formattedRuntime }}</span>
       <span class="quality">HD</span>
       <img *ngIf="show3DAudio" class="audio-icon" src="assets/icons/3d-audio.svg" alt="3D Audio" />
     </div>
-    <div class="evidence-list" *ngIf="movie.keywords && movie.keywords.length > 0">
-      <span class="evidence-text">{{ movie.keywords[0].name }}</span>
-      <ng-container *ngFor="let keyword of movie.keywords.slice(1)">
+    <div class="evidence-list" *ngIf="movie.genres && movie.genres.length > 0">
+      <span class="evidence-text">{{ movie.genres[0] }}</span>
+      <ng-container *ngFor="let genre of movie.genres.slice(1); let i = index">
         <div class="evidence-item">
           <span class="evidence-separator"></span>
-          <span class="evidence-text">{{ keyword.name }}</span>
+          <span class="evidence-text">{{ genre }}</span>
         </div>
       </ng-container>
     </div>

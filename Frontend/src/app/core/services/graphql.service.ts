@@ -20,6 +20,7 @@ export class GraphQLService {
         overview
         posterUrl
         backdropUrl
+        backdrops
         fsk
         genres
         logoUrl
@@ -27,7 +28,6 @@ export class GraphQLService {
     `;
     const GET_BROWSE_DATA = gql`
       ${MOVIE_FRAGMENT}
-
       query GetBrowsePageData {
         popular: popularMovies {
           ...MovieFragment
@@ -55,7 +55,6 @@ export class GraphQLService {
         }
       }
     `;
-
     return this.apollo.query({
       query: GET_BROWSE_DATA,
     });
@@ -69,12 +68,14 @@ export class GraphQLService {
           title
           overview
           posterUrl
-          backdropUrll
+          backdropUrl
+          backdrops
           runtime
           fsk
           genres
           vote_average
           release_date
+          logoUrl
         }
       }
     `;

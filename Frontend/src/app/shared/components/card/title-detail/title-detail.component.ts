@@ -14,7 +14,6 @@ import { CommonModule } from '@angular/common';
 import { Movie } from '../../../../core/models/movie.model';
 import { IconButtonComponent } from '../../buttons/icon-button/icon-button.component';
 import { RatingButtonsComponent } from '../../buttons/rating-buttons/rating-buttons.component';
-/* import { TMDB_CONFIG } from '../../../../core/constants/api.constants'; */
 
 @Component({
   selector: 'app-title-detail',
@@ -33,7 +32,6 @@ export class TitleDetailComponent implements AfterViewInit, OnDestroy {
   isVideoFadingOut = false;
   isMuted = true;
   videoEnded = false;
-  /* imageBaseUrl = TMDB_CONFIG.IMG_URL; */
 
   private onVideoEndedHandler: () => void;
 
