@@ -1,0 +1,49 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""Represents a movie from TMDB"""
+type Movie {
+  """The unique identifier of the movie"""
+  id: Int!
+
+  """The title of the movie"""
+  title: String!
+
+  """The summary of the movie"""
+  overview: String
+
+  """The full URL to the poster image (w500)"""
+  posterUrl: String
+
+  """The full URL to the backdrop image (original)"""
+  backdropUrl: String
+  backdrops: [String]
+
+  """The full URL to the movie logo (German)"""
+  logoUrl: String
+
+  """The average vote for the movie"""
+  vote_average: Float!
+
+  """
+  The release date of the movie, e.g., "2023-10-25"
+  """
+  release_date: String!
+
+  """The runtime of the movie in minutes"""
+  runtime: Int
+
+  """A list of genre names for the movie"""
+  genres: [String!]
+
+  """The German MPAA rating (FSK)"""
+  fsk: String
+}
+
+type Query {
+  popularMovies: [Movie!]!
+  topRatedMovies: [Movie!]!
+  moviesByGenre(genreId: Int!): [Movie!]!
+  movie(id: Int!): Movie!
+}
