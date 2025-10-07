@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { RowHeaderComponent } from './row-header/row-header.component';
 import { CommonModule } from '@angular/common';
 import { Movie } from '../../../core/models/movie.model';
@@ -9,8 +15,7 @@ import {
   OpenModalPayload,
 } from '../card/interactive-card/interactive-card.component';
 import { RankedCardComponent } from '../card/presenters/ranked-card/ranked-card.component';
-import { RankedItem } from '../../../features/browse/pages/browse/browse.component';
-/* import { TMDB_CONFIG } from '../../../core/constants/api.constants'; */
+import { RankedItem } from '../../../features/browse/browse.component';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({

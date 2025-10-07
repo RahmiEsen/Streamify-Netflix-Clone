@@ -1,61 +1,64 @@
-import { ObjectType, Field, Int, Float } from "@nestjs/graphql";
+import { ObjectType, Field, Int, Float } from '@nestjs/graphql';
 
-@ObjectType({ description: "Represents a movie from TMDB" })
-export class Movie {
-  @Field(() => Int, { description: "The unique identifier of the movie" })
-  id: number;
-
-  @Field({ description: "The title of the movie" })
-  title: string;
-
-  @Field(() => String, {
-    nullable: true,
-    description: "The summary of the movie",
-  })
-  overview: string;
-
-  @Field(() => String, {
-    nullable: true,
-    description: "The full URL to the poster image (w500)",
-  })
+@ObjectType()
+export class ImageSet {
+  @Field(() => String, { nullable: true })
   posterUrl: string | null;
 
-  @Field(() => String, {
-    nullable: true,
-    description: "The full URL to the backdrop image (original)",
-  })
+  @Field(() => String, { nullable: true })
   backdropUrl: string | null;
 
-  @Field(() => [String], { nullable: "itemsAndList" })
-  backdrops: string[];
+  @Field(() => String, { nullable: true })
+  backdropUrl2: string | null;
 
-  @Field(() => String, {
-    nullable: true,
-    description: "The full URL to the movie logo (German)",
-  })
+  @Field(() => String, { nullable: true })
+  heroBackdropUrlDesktop: string | null;
+
+  @Field(() => String, { nullable: true })
+  heroBackdropUrlMobile: string | null;
+
+  @Field(() => String, { nullable: true })
   logoUrl: string | null;
+}
 
-  @Field(() => Float, { description: "The average vote for the movie" })
+@ObjectType()
+export class Keyword {
+  @Field(() => Int)
+  id: number;
+
+  @Field()
+  name: string;
+}
+
+@ObjectType({ description: 'Represents a movie from TMDB' })
+export class Movie {
+  @Field(() => Int)
+  id: number;
+
+  @Field()
+  title: string;
+
+  @Field(() => ImageSet, { nullable: true })
+  imageSet: ImageSet | null;
+
+  @Field(() => String, { nullable: true })
+  overview: string;
+
+  @Field(() => Float)
   vote_average: number;
 
-  @Field({ description: 'The release date of the movie, e.g., "2023-10-25"' })
+  @Field()
   release_date: string;
 
-  @Field(() => Int, {
-    nullable: true,
-    description: "The runtime of the movie in minutes",
-  })
+  @Field(() => Int, { nullable: true })
   runtime: number;
 
-  @Field(() => [String], {
-    nullable: true,
-    description: "A list of genre names for the movie",
-  })
+  @Field(() => [String], { nullable: true })
   genres: string[];
 
-  @Field(() => String, {
-    nullable: true,
-    description: "The German MPAA rating (FSK)",
-  })
+  @Field(() => [Keyword], { nullable: true })
+  keywords: Keyword[];
+
+  @Field(() => String, { nullable: true })
   fsk: string;
 }

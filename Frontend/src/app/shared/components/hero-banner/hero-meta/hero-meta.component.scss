@@ -1,22 +1,22 @@
-@use '../../../styles/mixins' as m;
-@use '../../../styles/variables' as var;
+@use "../../../styles/mixins" as m;
+@use "../../../styles/variables" as var;
 
 main {
-  position: relative;
+  position: absolute;
   @include m.column-center-start;
-  top: 2.5vw;
-  bottom: 0;
+  bottom: 2.5vw;
   left: 4%;
   width: 36%;
+  height: 50%;
   z-index: 1;
   img {
     position: relative;
-    width: 100%;
-    min-height: 13.2vw;
+    max-height: 13.2vw;
+    width: inherit;
     margin-bottom: 1.2vw;
     transform-origin: bottom left;
   }
-  p {
+  p.overview {
     width: 100%;
     color: #fff;
     font-size: 1.2vw;
@@ -26,6 +26,22 @@ main {
     margin-top: 0.1vw;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.45);
   }
+  .keywords-wrapper {
+    display: none;
+    width: 100%;
+    gap: 0.5em;
+    .separator {
+      flex: 0 0 auto;
+      display: inline-block;
+      width: 0.35em;
+      height: 0.35em;
+      background-color: #646464;
+      border-radius: 50%;
+    }
+    .keyword {
+      font-size: 1vw;
+    }
+  }
   .button-wrapper {
     display: flex;
     justify-content: center;
@@ -34,6 +50,37 @@ main {
       @include m.center;
       text-decoration: none;
       flex-shrink: 0;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  main {
+    position: relative;
+    align-items: center;
+    top: unset;
+    bottom: 4em;
+    left: unset;
+    width: min-content;
+    gap: 0.5em;
+    img {
+      max-height: unset;
+      max-width: 25vw;
+      margin-bottom: unset;
+    }
+    p.overview {
+      display: none;
+    }
+    .keywords-wrapper {
+      @include m.center;
+      .keyword {
+        font-size: 1em;
+      }
+    }
+    .button-wrapper {
+      width: max-content;
+      margin-top: unset;
+      gap: 0.75em;
     }
   }
 }

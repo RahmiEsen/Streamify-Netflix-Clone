@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RankedItem } from '../../../../../features/browse/pages/browse/browse.component';
+import { RankedItem } from '../../../../../features/browse/browse.component';
 
 @Component({
   selector: 'app-ranked-card',

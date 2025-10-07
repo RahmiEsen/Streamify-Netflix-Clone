@@ -13,12 +13,14 @@ const apollo_1 = require("@nestjs/apollo");
 const path_1 = require("path");
 const config_1 = require("@nestjs/config");
 const movies_module_1 = require("./movies/movies.module");
+const utils_module_1 = require("./utils/utils.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            utils_module_1.UtilsModule,
             config_1.ConfigModule.forRoot({
                 isGlobal: true,
             }),

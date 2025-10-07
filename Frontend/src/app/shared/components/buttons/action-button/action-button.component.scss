@@ -1,5 +1,5 @@
-@use '../../../../shared/styles/mixins' as m;
-@use '../../../../shared/styles/variables' as var;
+@use "../../../../shared/styles/mixins" as m;
+@use "../../../../shared/styles/variables" as var;
 
 button {
   position: relative;
@@ -37,6 +37,34 @@ button {
     background-color: rgba(109, 109, 110, 0.7);
     &:hover {
       background-color: rgba(109, 109, 110, 0.4);
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  button {
+    padding: 1.5vw 2.5vw;
+    margin: 0;
+    .btn-icon {
+      height: 3vw;
+      width: 3vw;
+    }
+    span {
+      font-size: 2vw;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  button {
+    padding: 2.5vw 3.5vw;
+    margin: 0;
+    .btn-icon {
+      height: 6vw;
+      width: 6vw;
+    }
+    span {
+      font-size: 3.5vw;
     }
   }
 }

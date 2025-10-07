@@ -9,93 +9,114 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Movie = void 0;
+exports.Movie = exports.Keyword = exports.ImageSet = void 0;
 const graphql_1 = require("@nestjs/graphql");
+let ImageSet = class ImageSet {
+    posterUrl;
+    backdropUrl;
+    backdropUrl2;
+    heroBackdropUrlDesktop;
+    heroBackdropUrlMobile;
+    logoUrl;
+};
+exports.ImageSet = ImageSet;
+__decorate([
+    (0, graphql_1.Field)(() => String, { nullable: true }),
+    __metadata("design:type", Object)
+], ImageSet.prototype, "posterUrl", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => String, { nullable: true }),
+    __metadata("design:type", Object)
+], ImageSet.prototype, "backdropUrl", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => String, { nullable: true }),
+    __metadata("design:type", Object)
+], ImageSet.prototype, "backdropUrl2", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => String, { nullable: true }),
+    __metadata("design:type", Object)
+], ImageSet.prototype, "heroBackdropUrlDesktop", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => String, { nullable: true }),
+    __metadata("design:type", Object)
+], ImageSet.prototype, "heroBackdropUrlMobile", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => String, { nullable: true }),
+    __metadata("design:type", Object)
+], ImageSet.prototype, "logoUrl", void 0);
+exports.ImageSet = ImageSet = __decorate([
+    (0, graphql_1.ObjectType)()
+], ImageSet);
+let Keyword = class Keyword {
+    id;
+    name;
+};
+exports.Keyword = Keyword;
+__decorate([
+    (0, graphql_1.Field)(() => graphql_1.Int),
+    __metadata("design:type", Number)
+], Keyword.prototype, "id", void 0);
+__decorate([
+    (0, graphql_1.Field)(),
+    __metadata("design:type", String)
+], Keyword.prototype, "name", void 0);
+exports.Keyword = Keyword = __decorate([
+    (0, graphql_1.ObjectType)()
+], Keyword);
 let Movie = class Movie {
     id;
     title;
+    imageSet;
     overview;
-    posterUrl;
-    backdropUrl;
-    backdrops;
-    logoUrl;
     vote_average;
     release_date;
     runtime;
     genres;
+    keywords;
     fsk;
 };
 exports.Movie = Movie;
 __decorate([
-    (0, graphql_1.Field)(() => graphql_1.Int, { description: "The unique identifier of the movie" }),
+    (0, graphql_1.Field)(() => graphql_1.Int),
     __metadata("design:type", Number)
 ], Movie.prototype, "id", void 0);
 __decorate([
-    (0, graphql_1.Field)({ description: "The title of the movie" }),
+    (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], Movie.prototype, "title", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => String, {
-        nullable: true,
-        description: "The summary of the movie",
-    }),
+    (0, graphql_1.Field)(() => ImageSet, { nullable: true }),
+    __metadata("design:type", Object)
+], Movie.prototype, "imageSet", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", String)
 ], Movie.prototype, "overview", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => String, {
-        nullable: true,
-        description: "The full URL to the poster image (w500)",
-    }),
-    __metadata("design:type", Object)
-], Movie.prototype, "posterUrl", void 0);
-__decorate([
-    (0, graphql_1.Field)(() => String, {
-        nullable: true,
-        description: "The full URL to the backdrop image (original)",
-    }),
-    __metadata("design:type", Object)
-], Movie.prototype, "backdropUrl", void 0);
-__decorate([
-    (0, graphql_1.Field)(() => [String], { nullable: "itemsAndList" }),
-    __metadata("design:type", Array)
-], Movie.prototype, "backdrops", void 0);
-__decorate([
-    (0, graphql_1.Field)(() => String, {
-        nullable: true,
-        description: "The full URL to the movie logo (German)",
-    }),
-    __metadata("design:type", Object)
-], Movie.prototype, "logoUrl", void 0);
-__decorate([
-    (0, graphql_1.Field)(() => graphql_1.Float, { description: "The average vote for the movie" }),
+    (0, graphql_1.Field)(() => graphql_1.Float),
     __metadata("design:type", Number)
 ], Movie.prototype, "vote_average", void 0);
 __decorate([
-    (0, graphql_1.Field)({ description: 'The release date of the movie, e.g., "2023-10-25"' }),
+    (0, graphql_1.Field)(),
     __metadata("design:type", String)
 ], Movie.prototype, "release_date", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => graphql_1.Int, {
-        nullable: true,
-        description: "The runtime of the movie in minutes",
-    }),
+    (0, graphql_1.Field)(() => graphql_1.Int, { nullable: true }),
     __metadata("design:type", Number)
 ], Movie.prototype, "runtime", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => [String], {
-        nullable: true,
-        description: "A list of genre names for the movie",
-    }),
+    (0, graphql_1.Field)(() => [String], { nullable: true }),
     __metadata("design:type", Array)
 ], Movie.prototype, "genres", void 0);
 __decorate([
-    (0, graphql_1.Field)(() => String, {
-        nullable: true,
-        description: "The German MPAA rating (FSK)",
-    }),
+    (0, graphql_1.Field)(() => [Keyword], { nullable: true }),
+    __metadata("design:type", Array)
+], Movie.prototype, "keywords", void 0);
+__decorate([
+    (0, graphql_1.Field)(() => String, { nullable: true }),
     __metadata("design:type", String)
 ], Movie.prototype, "fsk", void 0);
 exports.Movie = Movie = __decorate([
-    (0, graphql_1.ObjectType)({ description: "Represents a movie from TMDB" })
+    (0, graphql_1.ObjectType)({ description: 'Represents a movie from TMDB' })
 ], Movie);
 //# sourceMappingURL=movie.entity.js.map

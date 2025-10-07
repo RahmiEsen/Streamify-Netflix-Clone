@@ -13,6 +13,7 @@ import {
   ContentChild,
   TemplateRef,
   ChangeDetectionStrategy,
+  HostBinding,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -40,21 +41,33 @@ export class SliderControlComponent implements OnChanges, AfterViewInit {
   transitionEnabled = true;
   isSliderActive = false;
 
+  currentIndex = 0;
   private currentPage = 0;
   private totalPages = 0;
-  private currentIndex = 0;
   private originalItemCount = 0;
   private isTransitioning = false;
 
   constructor(
     private elementRef: ElementRef,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
   ) {}
+
+  trackById(index: number, item: any): number {
+    if (item && item.movie && item.movie.id) {
+      return item.movie.id;
+    }
+    return item ? item.id : index;
+  }
 
   @HostListener('window:resize')
   onResize(): void {
     this.updateItemsPerPage();
     this.reinitializeSlider();
+  }
+
+  @HostBinding('class.ranked-mode')
+  get isRankedMode(): boolean {
+    return this.scrollMode === 'ranked';
   }
 
   ngAfterViewInit(): void {
@@ -87,9 +100,9 @@ export class SliderControlComponent implements OnChanges, AfterViewInit {
 
   private updateItemsPerPage(): void {
     if (isPlatformBrowser(this.platformId)) {
-      const visibleItems = getComputedStyle(this.elementRef.nativeElement).getPropertyValue(
-        '--visible'
-      );
+      const visibleItems = getComputedStyle(
+        this.elementRef.nativeElement,
+      ).getPropertyValue('--visible');
       this.itemsPerPage = parseInt(visibleItems, 10) || 6;
     }
   }
@@ -162,7 +175,7 @@ export class SliderControlComponent implements OnChanges, AfterViewInit {
 
   private scrollRightRanked(): void {
     if (this.currentPage === 0) {
-      this.currentIndex = 4 + this.itemsPerPage;
+      this.currentIndex = this.itemsPerPage * 2;
     } else {
       this.currentIndex += this.itemsPerPage;
     }

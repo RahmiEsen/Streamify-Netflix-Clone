@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { SeriesComponent } from './pages/series/series.component';
+import { SeriesComponent } from './series.component';
 
 export const SERIES_ROUTES: Routes = [
   {

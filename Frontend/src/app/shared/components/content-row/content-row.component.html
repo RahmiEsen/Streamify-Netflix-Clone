@@ -3,7 +3,11 @@
     [title]="rowTitle"
     [displayMode]="displayMode"
     [totalPages]="(sliderTotalPages$ | async) ?? 0"
-    [currentPage]="((sliderTotalPages$ | async) ?? 0) > 0 ? ((sliderCurrentPage$ | async) ?? 0) : 0"
+    [currentPage]="
+      ((sliderTotalPages$ | async) ?? 0) > 0
+        ? ((sliderCurrentPage$ | async) ?? 0)
+        : 0
+    "
   >
   </app-row-header>
   <app-slider-control
@@ -13,26 +17,41 @@
     (pagesInitialized)="onPagesInitialized($event)"
     (pageChange)="onPageChange($event)"
   >
-    <ng-template #itemTemplate let-item let-i="index" let-isFirst="isFirst" let-isLast="isLast">
-      <app-interactive-card
-        [movie]="displayMode === 'ranked' ? item.movie : item"
-        [isFirst]="isFirst"
-        [isLast]="isLast"
-        (hoverStateChange)="onCardHoverChange($event)"
-        (openModal)="onOpenModal($event)"
+    <ng-template
+      #itemTemplate
+      let-item
+      let-i="index"
+      let-isFirst="isFirst"
+      let-isLast="isLast"
+      let-currentIndex="currentIndex"
+      let-itemsPerPage="itemsPerPage"
+    >
+      <ng-container
+        *ngIf="
+          i >= currentIndex - 3 * itemsPerPage &&
+          i < currentIndex + 4 * itemsPerPage
+        "
       >
-        <ng-container *ngIf="displayMode === 'default'">
-          <app-title-card
-            [imageUrl]="item.backdropUrl"
-            [title]="item.title"
-            [logoUrl]="item.logoUrl"
-          >
-          </app-title-card>
-        </ng-container>
-        <ng-container *ngIf="displayMode === 'ranked'">
-          <app-ranked-card [item]="item"> </app-ranked-card>
-        </ng-container>
-      </app-interactive-card>
+        <app-interactive-card
+          [movie]="displayMode === 'ranked' ? item.movie : item"
+          [isFirst]="isFirst"
+          [isLast]="isLast"
+          (hoverStateChange)="onCardHoverChange($event)"
+          (openModal)="onOpenModal($event)"
+        >
+          <ng-container *ngIf="displayMode === 'default'">
+            <app-title-card
+              [imageUrl]="item.imageSet?.backdropUrl"
+              [title]="item.title"
+              [logoUrl]="item.imageSet?.logoUrl"
+            >
+            </app-title-card>
+          </ng-container>
+          <ng-container *ngIf="displayMode === 'ranked'">
+            <app-ranked-card [item]="item"> </app-ranked-card>
+          </ng-container>
+        </app-interactive-card>
+      </ng-container>
     </ng-template>
   </app-slider-control>
 </main>

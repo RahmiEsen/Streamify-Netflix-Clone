@@ -1,7 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectionStrategy, inject, HostListener } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  inject,
+  HostListener,
+} from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Observable } from 'rxjs';
 import { NavigationService } from '../../services/navigation.service';
 import { NavLink } from '../../models/nav-link.model';
 
@@ -15,11 +19,28 @@ import { NavLink } from '../../models/nav-link.model';
 })
 export class HeaderComponent {
   private readonly navigationService = inject(NavigationService);
-  public readonly navLinks: ReadonlyArray<NavLink> = this.navigationService.getMainNavLinks();
+  public readonly navLinks: ReadonlyArray<NavLink> =
+    this.navigationService.getMainNavLinks();
+  public readonly mobileNavLinks: ReadonlyArray<NavLink> =
+    this.navigationService.getMobileBottomNavLinks();
   public isScrolled = false;
+
+  public isNavHiddenOnMobile = false;
+  private lastScrollY = 0;
 
   @HostListener('window:scroll')
   onWindowScroll(): void {
-    this.isScrolled = window.scrollY > 0;
+    const currentScrollY = window.scrollY;
+    this.isScrolled = currentScrollY > 0;
+    if (window.innerWidth <= 800) {
+      if (currentScrollY > this.lastScrollY && currentScrollY > 100) {
+        this.isNavHiddenOnMobile = true;
+      } else if (currentScrollY < this.lastScrollY) {
+        this.isNavHiddenOnMobile = false;
+      }
+    } else {
+      this.isNavHiddenOnMobile = false;
+    }
+    this.lastScrollY = currentScrollY;
   }
 }

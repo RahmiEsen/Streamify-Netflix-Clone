@@ -1,16 +1,42 @@
-<header [class.scrolled]="isScrolled">
+<header
+  class="main-header"
+  [class.scrolled]="isScrolled"
+  [class.nav-is-hidden]="isNavHiddenOnMobile"
+>
   <a routerLink="/browse" class="logo-link" aria-label="Netflix Startseite">
     <img src="assets/logo.svg" alt="Netflix Logo" />
   </a>
-  <ul>
-    <li *ngFor="let link of navLinks">
-      <a
-        [routerLink]="link.path"
-        routerLinkActive="active-link"
-        [routerLinkActiveOptions]="{ exact: link.exact === true }"
+  <div class="test">
+    <span>Für Rahmi</span>
+    <button>
+      <img src="assets/button/search.svg" alt="Search" />
+    </button>
+  </div>
+  <nav class="main-nav">
+    <ul [class.hidden]="isNavHiddenOnMobile">
+      <li
+        *ngFor="let link of navLinks"
+        [class.hide-on-mobile]="!['Serien', 'Filme'].includes(link.label)"
       >
-        {{ link.label }}
+        <a
+          [routerLink]="link.path"
+          routerLinkActive="active-link"
+          [routerLinkActiveOptions]="{ exact: link.exact === true }"
+        >
+          {{ link.label }}
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<nav class="mobile-bottom-nav">
+  <ul>
+    <li *ngFor="let link of mobileNavLinks">
+      <a [routerLink]="link.path" routerLinkActive="active-link">
+        <img [src]="link.icon" [alt]="link.label" />
+        <span>{{ link.label }}</span>
       </a>
     </li>
   </ul>
-</header>
+</nav>

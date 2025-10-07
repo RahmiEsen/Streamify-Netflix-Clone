@@ -1,9 +1,13 @@
-@use '../../../styles/mixins' as m;
-@use '../../../styles/variables' as var;
+@use "../../../styles/mixins" as m;
+@use "../../../styles/variables" as var;
 
 :host {
   --gap: 5px;
   --visible: 2;
+}
+
+:host(.ranked-mode) .slider-item-wrapper {
+  aspect-ratio: auto !important;
 }
 
 .slider-control {
@@ -18,6 +22,9 @@
     transition: transform 0.5s ease-in-out;
     &.no-transition {
       transition: none;
+    }
+    .slider-item-wrapper {
+      aspect-ratio: 16 / 9;
     }
   }
   .nav {

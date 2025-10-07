@@ -1,47 +1,57 @@
-@use '../../../shared/styles/mixins' as m;
-@use '../../../shared/styles/variables' as var;
+@use "../../../shared/styles/mixins" as m;
+@use "../../../shared/styles/variables" as var;
 
-header {
+.main-header {
   position: fixed;
   @include m.start-center;
   top: 0;
   left: 0;
-  min-height: 68px;
   width: 100%;
-  background-color: transparent;
-  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 10%, transparent);
   padding: 0 4%;
+  min-height: 68px;
+  background-image: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.7) 10%,
+    transparent
+  );
   transition: background-color 0.4s ease;
   z-index: 2;
   &.scrolled {
     background-color: rgb(20, 20, 20);
   }
-  a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: auto;
-    width: auto;
+  .logo-link {
+    @include m.center;
+    margin-right: 25px;
     img {
       width: 92.5px;
       height: 31px;
-      margin-right: 25px;
     }
   }
-  ul {
+  .test {
+    display: none;
+    width: 100%;
+    span {
+      font-size: 21px;
+      font-weight: 600;
+    }
+    button {
+      all: unset;
+    }
+  }
+  .main-nav ul {
     @include m.center;
     margin: 0;
     padding: 0;
+    list-style-type: none;
+    gap: 1em;
     li {
-      list-style-type: none;
-      margin-left: 20px;
       line-height: 1.2;
       cursor: pointer;
       a {
-        font-size: 1.02vw;
+        font-size: 16px;
         color: var.$header-color;
-        transition: color 0.4s;
         text-decoration: none;
+        transition: color 0.4s;
         &:hover {
           color: var.$header-color-hover;
         }
@@ -51,5 +61,108 @@ header {
         }
       }
     }
+  }
+}
+
+.mobile-bottom-nav {
+  position: fixed;
+  display: none;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 12px 4%;
+  background: rgba(20, 20, 20, 0.8);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 2;
+  ul {
+    @include m.space;
+    width: 100%;
+    margin: 0;
+    list-style-type: none;
+    li {
+      cursor: pointer;
+      a {
+        @include m.column;
+        font-size: 10px;
+        color: var.$header-color;
+        text-decoration: none;
+        transition: color 0.4s;
+        gap: 4px;
+        img {
+          height: 24px;
+          width: 24px;
+        }
+        &:hover,
+        &.active-link {
+          color: var.$white;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .main-header {
+    @include m.column-start;
+    min-height: auto;
+    padding: 2% 4%;
+    gap: 0.5em;
+    transition:
+      background-color 0.4s,
+      padding 0.4s,
+      gap 0.4s;
+    &.scrolled {
+      background: rgba(20, 20, 20, 0.8);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    &.nav-is-hidden {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      gap: 0;
+    }
+    .logo-link {
+      display: none;
+    }
+    .test {
+      @include m.space;
+    }
+    .main-nav ul {
+      display: flex;
+      gap: 8px;
+      opacity: 1;
+      transform: translateY(0);
+      transition:
+        opacity 0.4s,
+        transform 0.4s,
+        max-height 0.4s ease-in-out,
+        margin 0.4s;
+      max-height: 100px;
+      &.hidden {
+        transform: translateY(-20px);
+        max-height: 0;
+        margin: 0;
+        pointer-events: none;
+        overflow: hidden;
+        opacity: 0;
+      }
+      li {
+        border: 1px solid #6d6d6eb3;
+        border-radius: 16px;
+        padding: 6px 12px;
+        margin-left: 0;
+        a {
+          font-size: 14px;
+        }
+      }
+      li.hide-on-mobile {
+        display: none;
+      }
+    }
+  }
+  .mobile-bottom-nav {
+    display: block;
   }
 }

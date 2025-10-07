@@ -1,5 +1,5 @@
-@use '../../../shared/styles/mixins' as m;
-@use '../../../shared/styles/variables' as var;
+@use "../../../shared/styles/mixins" as m;
+@use "../../../shared/styles/variables" as var;
 
 /* img[alt='Hero Image'] {
   opacity: 0;
@@ -17,7 +17,7 @@ main {
   height: 39.75vw;
   width: 100%;
   top: 0;
-  background-color: var.$black;
+  background: var.$black;
   video,
   img {
     position: absolute;
@@ -61,7 +61,28 @@ main {
   }
 }
 
-@media (min-width: 500px) {
-  /* main {
-  } */
+@media (max-width: 800px) {
+  main {
+    align-items: end;
+    height: 70vh;
+    img {
+      width: 85vw;
+      height: 55vh;
+      left: 50%;
+      top: 55%;
+      border: 2px solid rgba(53, 52, 56);
+      border-radius: 16px;
+      transform: translate(-50%, -50%);
+    }
+    .hero-vignette {
+      bottom: 0vw;
+      height: 8vw;
+    }
+    .trailer-vignette {
+      display: none;
+    }
+    app-age-rating {
+      display: none;
+    }
+  }
 }

@@ -1,10 +1,15 @@
-<main>
-  <img src="assets/test.webp" alt="Hero Image" [class.fade-in]="videoEnded" />
+<main *ngIf="heroMovie && heroMovie.imageSet">
+  <img
+    [src]="heroMovie.imageSet.heroBackdropUrlDesktop"
+    [alt]="heroMovie.title"
+    [class.fade-in]="videoEnded"
+  />
   <!-- <video #videoPlayer autoplay playsinline [class.fade-out]="videoEnded" muted>
     <source src="assets/test2.mp4" type="video/mp4" />
   </video> -->
   <div class="trailer-vignette" [class.fade-out]="videoEnded"></div>
   <div class="hero-vignette"></div>
-  <app-hero-meta></app-hero-meta>
-  <app-age-rating [icon]="buttonIcon" (buttonClick)="handleButtonClick()"> </app-age-rating>
+  <app-hero-meta [movie]="heroMovie"></app-hero-meta>
+  <app-age-rating [fsk]="heroMovie.fsk" [icon]="buttonIcon"></app-age-rating>
+  <!-- (buttonClick)="handleButtonClick()" -->
 </main>

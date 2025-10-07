@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { BrowseComponent } from './pages/browse/browse.component';
+import { BrowseComponent } from './browse.component';
 
 export const BROWSE_ROUTES: Routes = [
   {

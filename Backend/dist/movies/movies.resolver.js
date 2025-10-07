@@ -33,34 +33,43 @@ let MoviesResolver = class MoviesResolver {
     getMovieById(id) {
         return this.moviesService.getMovieById(id);
     }
+    getHeroMovie() {
+        return this.moviesService.getHeroMovie();
+    }
 };
 exports.MoviesResolver = MoviesResolver;
 __decorate([
-    (0, graphql_1.Query)(() => [movie_entity_1.Movie], { name: "popularMovies" }),
+    (0, graphql_1.Query)(() => [movie_entity_1.Movie], { name: 'popularMovies' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], MoviesResolver.prototype, "getPopularMovies", null);
 __decorate([
-    (0, graphql_1.Query)(() => [movie_entity_1.Movie], { name: "topRatedMovies" }),
+    (0, graphql_1.Query)(() => [movie_entity_1.Movie], { name: 'topRatedMovies' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], MoviesResolver.prototype, "getTopRatedMovies", null);
 __decorate([
-    (0, graphql_1.Query)(() => [movie_entity_1.Movie], { name: "moviesByGenre" }),
-    __param(0, (0, graphql_1.Args)("genreId", { type: () => graphql_1.Int })),
+    (0, graphql_1.Query)(() => [movie_entity_1.Movie], { name: 'moviesByGenre' }),
+    __param(0, (0, graphql_1.Args)('genreId', { type: () => graphql_1.Int })),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], MoviesResolver.prototype, "getMoviesByGenre", null);
 __decorate([
-    (0, graphql_1.Query)(() => movie_entity_1.Movie, { name: "movie" }),
-    __param(0, (0, graphql_1.Args)("id", { type: () => graphql_1.Int })),
+    (0, graphql_1.Query)(() => movie_entity_1.Movie, { name: 'movie' }),
+    __param(0, (0, graphql_1.Args)('id', { type: () => graphql_1.Int })),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], MoviesResolver.prototype, "getMovieById", null);
+__decorate([
+    (0, graphql_1.Query)(() => movie_entity_1.Movie, { name: 'heroMovie' }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], MoviesResolver.prototype, "getHeroMovie", null);
 exports.MoviesResolver = MoviesResolver = __decorate([
     (0, graphql_1.Resolver)(() => movie_entity_1.Movie),
     __metadata("design:paramtypes", [movies_service_1.MoviesService])

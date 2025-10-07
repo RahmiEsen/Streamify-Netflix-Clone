@@ -1,7 +1,8 @@
-<div class="card" *ngIf="movie">
+<div class="card" *ngIf="movie && movie.imageSet">
   <div class="card-top">
     <img
-      [src]="movie.backdrops && movie.backdrops.length > 1 ? movie.backdrops[1] : movie.backdropUrl"
+      *ngIf="movie.imageSet"
+      [src]="movie.imageSet.backdropUrl2"
       [alt]="movie.title"
     />
 
@@ -17,8 +18,8 @@
 
     <div class="media-info-wrapper" [class.fade-out]="isVideoFadingOut">
       <img
-        *ngIf="movie.logoUrl"
-        [src]="movie.logoUrl"
+        *ngIf="movie.imageSet?.logoUrl"
+        [src]="movie.imageSet.logoUrl"
         alt="{{ movie.title }} Logo"
         class="title-logo"
       />
@@ -35,7 +36,11 @@
   <div class="card-bottom" (click)="onRequestOpenModal()">
     <div class="controls-wrapper">
       <div class="controls">
-        <app-icon-button variant="secondary" icon="play.svg" (click)="$event.stopPropagation()">
+        <app-icon-button
+          variant="secondary"
+          icon="play.svg"
+          (click)="$event.stopPropagation()"
+        >
         </app-icon-button>
         <app-icon-button
           variant="primary"
@@ -44,16 +49,27 @@
           (click)="$event.stopPropagation()"
         >
         </app-icon-button>
-        <app-rating-buttons (click)="$event.stopPropagation()"></app-rating-buttons>
+        <app-rating-buttons
+          (click)="$event.stopPropagation()"
+        ></app-rating-buttons>
       </div>
-      <app-icon-button variant="primary" tooltip="Folgen und Infos" icon="down.svg">
+      <app-icon-button
+        variant="primary"
+        tooltip="Folgen und Infos"
+        icon="down.svg"
+      >
       </app-icon-button>
     </div>
     <div class="meta-data">
-      <span class="fsk">{{ movie.fsk || 'k.A.' }}</span>
+      <span class="fsk">{{ movie.fsk || "k.A." }}</span>
       <span class="duration">{{ formattedRuntime }}</span>
       <span class="quality">HD</span>
-      <img *ngIf="show3DAudio" class="audio-icon" src="assets/icons/3d-audio.svg" alt="3D Audio" />
+      <img
+        *ngIf="show3DAudio"
+        class="audio-icon"
+        src="assets/icons/3d-audio.svg"
+        alt="3D Audio"
+      />
     </div>
     <div class="evidence-list" *ngIf="movie.genres && movie.genres.length > 0">
       <span class="evidence-text">{{ movie.genres[0] }}</span>

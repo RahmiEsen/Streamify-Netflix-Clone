@@ -4,9 +4,11 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { ConfigModule } from '@nestjs/config';
 import { MoviesModule } from './movies/movies.module';
+import { UtilsModule } from './utils/utils.module';
 
 @Module({
   imports: [
+    UtilsModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),

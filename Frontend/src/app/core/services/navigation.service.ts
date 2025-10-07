@@ -14,6 +14,28 @@ export class NavigationService {
     { path: APP_ROUTES.MY_LIST, label: 'Meine Liste' },
   ];
 
+  private readonly mobileBottomNavLinks: ReadonlyArray<NavLink> = [
+    {
+      path: APP_ROUTES.BROWSE,
+      label: 'Startseite',
+      icon: 'assets/button/home.svg',
+    },
+    {
+      path: APP_ROUTES.LATEST,
+      label: 'Neu und Beliebt',
+      icon: 'assets/button/hot.svg',
+    },
+    {
+      path: APP_ROUTES.MY_ACCOUNT,
+      label: 'Mein Netflix',
+      icon: 'assets/user.png',
+    },
+  ];
+
+  public getMobileBottomNavLinks(): ReadonlyArray<NavLink> {
+    return this.mobileBottomNavLinks;
+  }
+
   public getMainNavLinks(): ReadonlyArray<NavLink> {
     return this.mainNavLinks;
   }

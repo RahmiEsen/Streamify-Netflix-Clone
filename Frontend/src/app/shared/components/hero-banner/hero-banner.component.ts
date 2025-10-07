@@ -1,7 +1,20 @@
+import {
+  Component,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+  OnDestroy,
+  Input,
+  Renderer2,
+  SimpleChanges,
+  OnChanges,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { HeroMetaComponent } from './hero-meta/hero-meta.component';
 import { AgeRatingComponent } from './age-rating/age-rating.component';
+import { Movie } from '../../../core/models/movie.model';
+import { FastAverageColor } from 'fast-average-color';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-hero-banner',
@@ -10,29 +23,76 @@ import { AgeRatingComponent } from './age-rating/age-rating.component';
   templateUrl: './hero-banner.component.html',
   styleUrl: './hero-banner.component.scss',
 })
-export class HeroBannerComponent implements AfterViewInit, OnDestroy {
-  @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
-
+/* AfterViewInit, OnDestroy */
+export class HeroBannerComponent implements OnChanges {
+  @Input() heroMovie: Movie | null = null;
+  /* @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>; */
   isMuted = true;
   videoEnded = false;
 
-  private isAudioFading = false;
+  private fac = new FastAverageColor();
+  /* private isAudioFading = false;
   private fadeOutInterval: any;
   private readonly AUDIO_FADE_START_TIME = 2;
-  private readonly VIDEO_FADE_START_TIME = 0.5;
+  private readonly VIDEO_FADE_START_TIME = 0.5; */
 
-  ngAfterViewInit(): void {
+  constructor(
+    private http: HttpClient,
+    private renderer: Renderer2,
+    private elementRef: ElementRef,
+  ) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['heroMovie'] && this.heroMovie) {
+      const fullImageUrl = this.heroMovie.imageSet?.heroBackdropUrlDesktop;
+      if (fullImageUrl) {
+        const imagePath = fullImageUrl.substring(fullImageUrl.lastIndexOf('/'));
+        this.applyGradientFromBackend(imagePath);
+      } else {
+        this.setBackgroundStyle('linear-gradient(to top, #141414, #181818)');
+      }
+    }
+  }
+
+  private applyGradientFromBackend(path: string): void {
+    this.http
+      .get<{
+        dominantColor: string;
+      }>(`http://localhost:3000/api/colors?path=${path}`)
+      .subscribe((colorResult) => {
+        const background = `${colorResult.dominantColor}`;
+        this.setBackgroundStyle(background);
+      });
+  }
+
+  private setBackgroundStyle(style: string): void {
+    const mainElement = this.elementRef.nativeElement.querySelector('main');
+    if (mainElement) {
+      this.renderer.setStyle(mainElement, 'background', style);
+    }
+  }
+
+  /* ngAfterViewInit(): void {
     this.videoPlayer.nativeElement.muted = this.isMuted;
-    this.videoPlayer.nativeElement.addEventListener('ended', this.onVideoEnded.bind(this));
-    this.videoPlayer.nativeElement.addEventListener('timeupdate', this.onTimeUpdate.bind(this));
+    this.videoPlayer.nativeElement.addEventListener(
+      'ended',
+      this.onVideoEnded.bind(this),
+    );
+    this.videoPlayer.nativeElement.addEventListener(
+      'timeupdate',
+      this.onTimeUpdate.bind(this),
+    );
   }
 
   ngOnDestroy(): void {
     if (this.videoPlayer && this.videoPlayer.nativeElement) {
-      this.videoPlayer.nativeElement.removeEventListener('ended', this.onVideoEnded.bind(this));
+      this.videoPlayer.nativeElement.removeEventListener(
+        'ended',
+        this.onVideoEnded.bind(this),
+      );
       this.videoPlayer.nativeElement.removeEventListener(
         'timeupdate',
-        this.onTimeUpdate.bind(this)
+        this.onTimeUpdate.bind(this),
       );
     }
     clearInterval(this.fadeOutInterval);
@@ -45,7 +105,11 @@ export class HeroBannerComponent implements AfterViewInit, OnDestroy {
     if (timeRemaining <= this.VIDEO_FADE_START_TIME && !this.videoEnded) {
       this.videoEnded = true;
     }
-    if (timeRemaining <= this.AUDIO_FADE_START_TIME && !this.isMuted && !this.isAudioFading) {
+    if (
+      timeRemaining <= this.AUDIO_FADE_START_TIME &&
+      !this.isMuted &&
+      !this.isAudioFading
+    ) {
       this.isAudioFading = true;
       this.startAudioFadeOut(timeRemaining * 1000);
     }
@@ -103,7 +167,7 @@ export class HeroBannerComponent implements AfterViewInit, OnDestroy {
     this.videoPlayer.nativeElement.play();
     clearInterval(this.fadeOutInterval);
     this.fadeOutInterval = null;
-  }
+  }*/
 
   get buttonIcon(): string {
     if (this.videoEnded) {

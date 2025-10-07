@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-title-card',
@@ -13,4 +13,5 @@ export class TitleCardComponent {
   @Input({ required: true }) imageUrl!: string;
   @Input({ required: true }) title!: string;
   @Input() logoUrl?: string;
+  @Input() backdropSrcset: string = '';
 }

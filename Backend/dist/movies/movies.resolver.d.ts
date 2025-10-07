@@ -1,5 +1,5 @@
-import { MoviesService } from "./movies.service";
-import { Movie } from "./entities/movie.entity";
+import { MoviesService } from './movies.service';
+import { Movie } from './entities/movie.entity';
 export declare class MoviesResolver {
     private readonly moviesService;
     constructor(moviesService: MoviesService);
@@ -7,4 +7,5 @@ export declare class MoviesResolver {
     getTopRatedMovies(): Promise<Movie[]>;
     getMoviesByGenre(genreId: number): Promise<Movie[]>;
     getMovieById(id: number): Promise<Movie>;
+    getHeroMovie(): Promise<Movie>;
 }
