@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IconButtonComponent } from '../../buttons/icon-button/icon-button.component';
-import { Movie } from '../../../../core/models/movie.model';
+import { Movie } from '../../../../core/models/media.model';
 
 @Component({
   selector: 'app-age-rating',

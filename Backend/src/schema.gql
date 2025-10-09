@@ -2,6 +2,18 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+interface Media {
+  id: Int!
+  title: String!
+  imageSet: ImageSet
+  overview: String
+  vote_average: Float!
+  release_date: String!
+  genres: [String!]!
+  keywords: [Keyword!]
+  fsk: String
+}
+
 type ImageSet {
   posterUrl: String
   backdropUrl: String
@@ -16,24 +28,40 @@ type Keyword {
   name: String!
 }
 
-"""Represents a movie from TMDB"""
-type Movie {
+type Movie implements Media {
   id: Int!
   title: String!
   imageSet: ImageSet
   overview: String
   vote_average: Float!
   release_date: String!
-  runtime: Int
-  genres: [String!]
+  genres: [String!]!
   keywords: [Keyword!]
   fsk: String
+
+  """The runtime of the movie in minutes."""
+  duration: Float!
+}
+
+type Series implements Media {
+  id: Int!
+  title: String!
+  imageSet: ImageSet
+  overview: String
+  vote_average: Float!
+  release_date: String!
+  genres: [String!]!
+  keywords: [Keyword!]
+  fsk: String
+
+  """The total number of seasons."""
+  numberOfSeasons: Int!
 }
 
 type Query {
-  popularMovies: [Movie!]!
-  topRatedMovies: [Movie!]!
-  moviesByGenre(genreId: Int!): [Movie!]!
-  movie(id: Int!): Movie!
-  heroMovie: Movie!
+  popularMedia: [Media!]!
+  topRatedMedia: [Media!]!
+  mediaByGenre(genreId: Int!): [Media!]!
+  mediaById(id: Int!, mediaType: String!): Media
+  heroMedia: Media!
 }

@@ -5,8 +5,7 @@
       [src]="movie.imageSet.backdropUrl2"
       [alt]="movie.title"
     />
-
-    <video
+    <!-- <video
       class="preview-video"
       #videoPlayer
       *ngIf="isVideoPlaying"
@@ -14,8 +13,7 @@
       [class.fade-out]="isVideoFadingOut"
       playsinline
       muted
-    ></video>
-
+    ></video> -->
     <div class="media-info-wrapper" [class.fade-out]="isVideoFadingOut">
       <img
         *ngIf="movie.imageSet?.logoUrl"
@@ -23,7 +21,6 @@
         alt="{{ movie.title }} Logo"
         class="title-logo"
       />
-
       <app-icon-button
         variant="primary"
         [icon]="icon"
@@ -32,7 +29,6 @@
       </app-icon-button>
     </div>
   </div>
-
   <div class="card-bottom" (click)="onRequestOpenModal()">
     <div class="controls-wrapper">
       <div class="controls">
@@ -62,7 +58,13 @@
     </div>
     <div class="meta-data">
       <span class="fsk">{{ movie.fsk || "k.A." }}</span>
-      <span class="duration">{{ formattedRuntime }}</span>
+      <span *ngIf="isMovie(movie)" class="duration">{{
+        formattedRuntime
+      }}</span>
+
+      <span *ngIf="isSeries(movie)" class="duration"
+        >{{ movie.numberOfSeasons }} Staffeln</span
+      >
       <span class="quality">HD</span>
       <img
         *ngIf="show3DAudio"

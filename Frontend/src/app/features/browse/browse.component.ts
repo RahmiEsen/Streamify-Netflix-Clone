@@ -10,20 +10,20 @@ import { HeroBannerComponent } from '../../shared/components/hero-banner/hero-ba
 import { ContentRowComponent } from '../../shared/components/content-row/content-row.component';
 import { DetailModalComponent } from '../../shared/components/detail-modal/detail-modal.component';
 import { OpenModalPayload } from '../../shared/components/card/interactive-card/interactive-card.component';
-import { Movie } from '../../core/models/movie.model';
-import { RANKING_SVG_DATA } from '../../core/data/ranking-svg.data';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { GraphQLService } from '../../core/services/graphql.service';
-import { map } from 'rxjs';
+import { catchError, forkJoin, map, of } from 'rxjs';
+import { Media, Movie, Series } from '../../core/models/media.model';
+import { RANKING_SVG_DATA } from '../../core/data/ranking-svg.data';
 
 export interface ContentRowData {
   rowTitle: string;
-  items: (Movie | RankedItem)[];
+  items: (Media | RankedItem)[];
   displayMode?: 'default' | 'ranked';
 }
 
 export interface RankedItem {
-  movie: Movie;
+  media: Media;
   rank: number;
   viewBox: string;
   pathD: string;
@@ -44,7 +44,7 @@ export interface RankedItem {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BrowseComponent implements OnInit {
-  public heroMovie: Movie | null = null;
+  public heroMovie: (Movie | Series) | null = null;
   public contentRows: ContentRowData[] = [];
   public selectedMediaForModal: OpenModalPayload | null = null;
 
@@ -55,54 +55,77 @@ export class BrowseComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.graphqlService
-      .getBrowsePageData()
-      .pipe(map((response) => response.data))
-      .subscribe((apiResult: any) => {
-        this.heroMovie = apiResult.heroMovie;
-        const rankedItems = apiResult.popular
-          .slice(0, 10)
-          .map((movie: Movie, index: number) => {
-            const svgData = RANKING_SVG_DATA[index];
-            return { movie, ...svgData };
-          });
-        this.contentRows = [
-          {
-            rowTitle: 'Von der Kritik gelobte Filme',
-            items: apiResult.topRated.slice(0, 24),
-          },
-          {
-            rowTitle: 'Top-10-Filme in Deutschland heute',
-            items: rankedItems,
-            displayMode: 'ranked',
-          },
-          {
-            rowTitle: 'Horror',
-            items: apiResult.horror.slice(0, 24),
-          },
-          {
-            rowTitle: 'Thriller',
-            items: apiResult.thriller.slice(0, 24),
-          },
-          {
-            rowTitle: 'Komödien',
-            items: apiResult.comedy.slice(0, 24),
-          },
-          {
-            rowTitle: 'Krimis',
-            items: apiResult.crime.slice(0, 24),
-          },
-          {
-            rowTitle: 'Drama',
-            items: apiResult.drama.slice(0, 24),
-          },
-          {
-            rowTitle: 'Dokumentationen',
-            items: apiResult.documentary.slice(0, 24),
-          },
-        ];
-        this.cdr.markForCheck();
-      });
+    forkJoin({
+      hero: this.graphqlService.getHeroMedia().pipe(catchError(() => of(null))),
+      popular: this.graphqlService
+        .getPopularMedia()
+        .pipe(catchError(() => of([]))),
+      topRated: this.graphqlService
+        .getTopRatedMedia()
+        .pipe(catchError(() => of([]))),
+      horror: this.graphqlService
+        .getMediaByGenre(27)
+        .pipe(catchError(() => of([]))),
+      thriller: this.graphqlService
+        .getMediaByGenre(53)
+        .pipe(catchError(() => of([]))),
+      comedy: this.graphqlService
+        .getMediaByGenre(35)
+        .pipe(catchError(() => of([]))),
+      crime: this.graphqlService
+        .getMediaByGenre(80)
+        .pipe(catchError(() => of([]))),
+      drama: this.graphqlService
+        .getMediaByGenre(18)
+        .pipe(catchError(() => of([]))),
+      documentary: this.graphqlService
+        .getMediaByGenre(99)
+        .pipe(catchError(() => of([]))),
+    }).subscribe((apiResult: any) => {
+      this.heroMovie = apiResult.hero;
+      const rankedItems = apiResult.popular
+        .slice(0, 10)
+        .map((mediaItem: Media, index: number) => {
+          const svgData = RANKING_SVG_DATA[index];
+          return { media: mediaItem, ...svgData };
+        });
+      this.contentRows = [
+        {
+          rowTitle: 'Von der Kritik gelobt',
+          items: apiResult.topRated.slice(0, 24),
+        },
+        {
+          rowTitle: 'Top 10 in Deutschland heute',
+          items: rankedItems,
+          displayMode: 'ranked',
+        },
+        {
+          rowTitle: 'Horror',
+          items: apiResult.horror.slice(0, 24),
+        },
+        /* {
+          rowTitle: 'Thriller',
+          items: apiResult.thriller.slice(0, 24),
+        },
+        {
+          rowTitle: 'Komödien',
+          items: apiResult.comedy.slice(0, 24),
+        },
+        {
+          rowTitle: 'Krimis',
+          items: apiResult.crime.slice(0, 24),
+        },
+        {
+          rowTitle: 'Drama',
+          items: apiResult.drama.slice(0, 24),
+        },
+        {
+          rowTitle: 'Dokumentationen',
+          items: apiResult.documentary.slice(0, 24),
+        }, */
+      ];
+      this.cdr.markForCheck();
+    });
   }
 
   trackByRow(index: number, row: ContentRowData): string {

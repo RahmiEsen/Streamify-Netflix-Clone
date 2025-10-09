@@ -9,22 +9,33 @@ import {
   OnDestroy,
   ChangeDetectorRef,
 } from '@angular/core';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+} from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { Movie } from '../../../core/models/movie.model';
 import { ActionButtonComponent } from '../buttons/action-button/action-button.component';
 import { IconButtonComponent } from '../buttons/icon-button/icon-button.component';
 import { RatingButtonsComponent } from '../buttons/rating-buttons/rating-buttons.component';
+import { Media, Movie, Series } from '../../../core/models/media.model';
 
 export interface OpenModalPayload {
-  movie: Movie;
+  media: Media;
   originBounds: DOMRect;
 }
 
 @Component({
   selector: 'app-detail-modal',
   standalone: true,
-  imports: [CommonModule, ActionButtonComponent, IconButtonComponent, RatingButtonsComponent],
+  imports: [
+    CommonModule,
+    ActionButtonComponent,
+    IconButtonComponent,
+    RatingButtonsComponent,
+  ],
   templateUrl: './detail-modal.component.html',
   styleUrl: './detail-modal.component.scss',
   animations: [
@@ -43,7 +54,7 @@ export interface OpenModalPayload {
             left: '50%',
             width: '850px',
             transform: 'scale(1) translateX(-50%)',
-          })
+          }),
         ),
       ]),
       transition(':leave', [
@@ -54,7 +65,7 @@ export interface OpenModalPayload {
             left: '{{startLeft}}px',
             width: '{{startWidth}}px',
             transform: 'scale(0.2)',
-          })
+          }),
         ),
       ]),
     ]),
@@ -75,7 +86,6 @@ export class DetailModalComponent implements AfterViewInit, OnDestroy {
   videoEnded = false;
   isMuted = true;
   isOpen = false;
-
   seasons = [
     { number: 1, episodeCount: 12 },
     { number: 2, episodeCount: 12 },
@@ -86,7 +96,6 @@ export class DetailModalComponent implements AfterViewInit, OnDestroy {
     { number: 7, episodeCount: 12 },
     { number: 8, episodeCount: 12 },
   ];
-
   episodes = [
     {
       number: 1,
@@ -224,6 +233,28 @@ export class DetailModalComponent implements AfterViewInit, OnDestroy {
     if (video) {
       video.removeEventListener('ended', this.onVideoEnded.bind(this));
     }
+  }
+
+  public isMovie(media: Media): media is Movie {
+    return media.__typename === 'Movie';
+  }
+
+  public isSeries(media: Media): media is Series {
+    return media.__typename === 'Series';
+  }
+
+  public getFormattedDuration(media: Media): string {
+    if (this.isMovie(media) && media.duration) {
+      const hours = Math.floor(media.duration / 60);
+      const minutes = media.duration % 60;
+      return `${hours}h ${minutes}min`;
+    }
+    return '';
+  }
+
+  public getYear(media: Media): string {
+    if (!media.release_date) return '';
+    return new Date(media.release_date).getFullYear().toString();
   }
 
   private onVideoEnded(): void {

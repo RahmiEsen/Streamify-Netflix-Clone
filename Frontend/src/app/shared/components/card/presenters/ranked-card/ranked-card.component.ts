@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RankedItem } from '../../../../../features/browse/browse.component';
+import { RankedItem } from '../../../../../core/models/ranked-item.model';
 
 @Component({
   selector: 'app-ranked-card',
@@ -12,5 +12,4 @@ import { RankedItem } from '../../../../../features/browse/browse.component';
 })
 export class RankedCardComponent {
   @Input({ required: true }) item!: RankedItem;
-  /* @Input({ required: true }) imageBaseUrl!: string; */
 }

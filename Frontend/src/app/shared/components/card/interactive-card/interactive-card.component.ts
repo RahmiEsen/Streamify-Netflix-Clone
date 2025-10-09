@@ -8,12 +8,12 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TitleDetailComponent } from '../title-detail/title-detail.component';
-import { Movie } from '../../../../core/models/movie.model';
 import { GraphQLService } from '../../../../core/services/graphql.service';
-import { map } from 'rxjs';
+import { Media, Movie, Series } from '../../../../core/models/media.model';
+import { take } from 'rxjs';
 
 export interface OpenModalPayload {
-  movie: Movie;
+  media: Media;
   originBounds: DOMRect;
 }
 
@@ -25,7 +25,7 @@ export interface OpenModalPayload {
   styleUrls: ['./interactive-card.component.scss'],
 })
 export class InteractiveCardComponent {
-  @Input({ required: true }) movie!: Movie;
+  @Input({ required: true }) movie!: Movie | Series;
   @Input() isFirst: boolean = false;
   @Input() isLast: boolean = false;
   @Output() hoverStateChange = new EventEmitter<boolean>();
@@ -33,7 +33,7 @@ export class InteractiveCardComponent {
 
   isHovered = false;
   isAnimationReady = false;
-  detailedMovie: Movie | null = null;
+  detailedMovie: Movie | Series | null = null;
 
   private openTimer: any;
   private closeTimer: any;
@@ -41,35 +41,45 @@ export class InteractiveCardComponent {
   constructor(
     private cdr: ChangeDetectorRef,
     private elementRef: ElementRef,
-    private graphqlService: GraphQLService
+    private graphqlService: GraphQLService,
   ) {}
 
   requestOpenModal(): void {
     const originBounds = this.elementRef.nativeElement.getBoundingClientRect();
-    this.openModal.emit({ movie: this.detailedMovie || this.movie, originBounds: originBounds });
+    this.openModal.emit({
+      media: this.detailedMovie || this.movie,
+      originBounds: originBounds,
+    });
   }
 
   onMouseEnter(): void {
-    if (window.innerWidth < 1025) {
-      return;
-    }
+    if (window.innerWidth < 1025) return;
+
     clearTimeout(this.closeTimer);
     this.openTimer = setTimeout(() => {
+      if (!this.movie) return;
+
       this.isHovered = true;
       this.hoverStateChange.emit(true);
+
       if (!this.detailedMovie) {
         this.graphqlService
-          .getMovieDetails(this.movie.id)
-          .pipe(map((response) => response.data.movie))
-          .subscribe((details) => {
+          .getMediaById(
+            this.movie.id,
+            this.movie.__typename === 'Movie' ? 'movie' : 'tv',
+          )
+          .pipe(take(1))
+          .subscribe((details: Movie | Series | null) => {
+            if (!details) return; // ✅ null-Guard
             this.detailedMovie = details;
-            this.cdr.detectChanges();
+            this.cdr.markForCheck();
           });
       }
-      this.cdr.detectChanges();
+
+      this.cdr.markForCheck();
       setTimeout(() => {
         this.isAnimationReady = true;
-        this.cdr.detectChanges();
+        this.cdr.markForCheck();
       }, 10);
     }, 400);
   }

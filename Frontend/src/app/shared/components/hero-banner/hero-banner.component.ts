@@ -12,7 +12,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { HeroMetaComponent } from './hero-meta/hero-meta.component';
 import { AgeRatingComponent } from './age-rating/age-rating.component';
-import { Movie } from '../../../core/models/movie.model';
+import { Media, Movie } from '../../../core/models/media.model';
 import { FastAverageColor } from 'fast-average-color';
 import { HttpClient } from '@angular/common/http';
 
@@ -25,7 +25,7 @@ import { HttpClient } from '@angular/common/http';
 })
 /* AfterViewInit, OnDestroy */
 export class HeroBannerComponent implements OnChanges {
-  @Input() heroMovie: Movie | null = null;
+  @Input() heroMovie: Media | null = null;
   /* @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>; */
   isMuted = true;
   videoEnded = false;

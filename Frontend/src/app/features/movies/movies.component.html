@@ -1,1 +1,23 @@
-<app-hero-banner></app-hero-banner> <app-content-row></app-content-row>
+<app-hero-banner
+  *ngIf="heroMedia$ | async as hero"
+  [heroMovie]="hero"
+></app-hero-banner>
+<cdk-virtual-scroll-viewport
+  class="content-rows-viewport"
+  *ngIf="contentRows$ | async as rows"
+  itemSize="350"
+>
+  <app-content-row
+    *cdkVirtualFor="let row of rows; trackBy: trackByRow"
+    [rowTitle]="row.rowTitle"
+    [items]="row.items"
+    (openModal)="handleOpenModal($event)"
+  >
+  </app-content-row>
+</cdk-virtual-scroll-viewport>
+<app-detail-modal
+  *ngIf="selectedMediaForModal"
+  [modalPayload]="selectedMediaForModal"
+  (closeModal)="closeModal()"
+>
+</app-detail-modal>

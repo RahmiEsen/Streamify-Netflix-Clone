@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActionButtonComponent } from '../../buttons/action-button/action-button.component';
-import { Movie } from '../../../../core/models/movie.model';
+import { Media } from '../../../../core/models/media.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,5 +10,5 @@ import { CommonModule } from '@angular/common';
   styleUrl: './hero-meta.component.scss',
 })
 export class HeroMetaComponent {
-  @Input() movie: Movie | null = null;
+  @Input() movie: Media | null = null;
 }

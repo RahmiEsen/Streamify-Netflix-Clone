@@ -1,0 +1,32 @@
+import { HttpService } from '@nestjs/axios';
+import { ConfigService } from '@nestjs/config';
+import { Movie } from './entities/movie.entity';
+import { Series } from './entities/series.entity';
+export type MediaType = 'movie' | 'tv';
+export declare class MediaService {
+    private readonly httpService;
+    private readonly configService;
+    private readonly logger;
+    private readonly tmdbApiKey;
+    private readonly tmdbBaseUrl;
+    private readonly imageBaseUrl;
+    constructor(httpService: HttpService, configService: ConfigService);
+    getPopularMedia(): Promise<(Movie | Series)[]>;
+    getTopRatedMedia(): Promise<(Movie | Series)[]>;
+    getMediaByGenre(genreId: number): Promise<(Movie | Series)[]>;
+    getMediaById(id: number, mediaType: MediaType): Promise<Movie | Series>;
+    getHeroMedia(): Promise<Movie | Series>;
+    private fetchAndProcessMedia;
+    private discoverMedia;
+    private buildDiscoverUrl;
+    private fetchDetailedMedia;
+    private getMediaDetails;
+    private fetchRawMediaDetails;
+    private combineAndSortResults;
+    private transformRawDataToMedia;
+    private createImageSet;
+    private buildImageUrl;
+    private findEnglishLogo;
+    private getGermanCertificationForMovie;
+    private getGermanCertificationForSeries;
+}

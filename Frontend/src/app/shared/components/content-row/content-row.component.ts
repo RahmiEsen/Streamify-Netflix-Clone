@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { RowHeaderComponent } from './row-header/row-header.component';
 import { CommonModule } from '@angular/common';
-import { Movie } from '../../../core/models/movie.model';
+import { Media } from '../../../core/models/media.model';
 import { SliderControlComponent } from './slider-control/slider-control.component';
 import { TitleCardComponent } from '../card/presenters/title-card/title-card.component';
 import {
@@ -15,8 +15,8 @@ import {
   OpenModalPayload,
 } from '../card/interactive-card/interactive-card.component';
 import { RankedCardComponent } from '../card/presenters/ranked-card/ranked-card.component';
-import { RankedItem } from '../../../features/browse/browse.component';
 import { BehaviorSubject } from 'rxjs';
+import { RankedItem } from '../../../core/models/ranked-item.model';
 
 @Component({
   selector: 'app-content-row',
@@ -35,17 +35,15 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ContentRowComponent {
   @Input() rowTitle: string = '';
-  @Input() items: (Movie | RankedItem)[] = [];
+  @Input() items: (Media | RankedItem)[] = [];
   @Input() displayMode: 'default' | 'ranked' = 'default';
   @Output() openModal = new EventEmitter<OpenModalPayload>();
 
   isRowHovered = false;
-  /* imageBaseUrl = TMDB_CONFIG.IMG_URL; */
 
   private readonly sliderTotalPages$$ = new BehaviorSubject<number>(0);
-  public readonly sliderTotalPages$ = this.sliderTotalPages$$.asObservable();
-
   private readonly sliderCurrentPage$$ = new BehaviorSubject<number>(0);
+  public readonly sliderTotalPages$ = this.sliderTotalPages$$.asObservable();
   public readonly sliderCurrentPage$ = this.sliderCurrentPage$$.asObservable();
 
   onOpenModal(payload: OpenModalPayload): void {

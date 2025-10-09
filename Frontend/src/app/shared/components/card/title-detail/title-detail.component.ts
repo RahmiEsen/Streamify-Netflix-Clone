@@ -11,9 +11,10 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Movie } from '../../../../core/models/movie.model';
+import { Movie, Series } from '../../../../core/models/media.model';
 import { IconButtonComponent } from '../../buttons/icon-button/icon-button.component';
 import { RatingButtonsComponent } from '../../buttons/rating-buttons/rating-buttons.component';
+import { isMovie, isSeries } from '../../../../core/services/graphql.service';
 
 @Component({
   selector: 'app-title-detail',
@@ -24,7 +25,7 @@ import { RatingButtonsComponent } from '../../buttons/rating-buttons/rating-butt
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TitleDetailComponent implements AfterViewInit, OnDestroy {
-  @Input({ required: true }) movie!: Movie;
+  @Input({ required: true }) movie!: Movie | Series;
   @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
   @Output() openModalRequest = new EventEmitter<void>();
 
@@ -34,6 +35,8 @@ export class TitleDetailComponent implements AfterViewInit, OnDestroy {
   videoEnded = false;
 
   private onVideoEndedHandler: () => void;
+  public isMovie = isMovie;
+  public isSeries = isSeries;
 
   constructor(private cdr: ChangeDetectorRef) {
     this.onVideoEndedHandler = this.onVideoEnded.bind(this);
@@ -113,12 +116,13 @@ export class TitleDetailComponent implements AfterViewInit, OnDestroy {
   }
 
   get formattedRuntime(): string {
-    if (!this.movie?.runtime) {
-      return '';
+    // Sicherstellen, dass es sich um einen Film handelt und duration existiert
+    if (isMovie(this.movie) && this.movie.duration) {
+      const hours = Math.floor(this.movie.duration / 60);
+      const minutes = this.movie.duration % 60;
+      return `${hours} Std. ${minutes} Min.`;
     }
-    const hours = Math.floor(this.movie.runtime / 60);
-    const minutes = this.movie.runtime % 60;
-    return `${hours} Std. ${minutes} Min.`;
+    return ''; // Gib für Serien oder Filme ohne Laufzeit nichts zurück
   }
 
   get show3DAudio(): boolean {
