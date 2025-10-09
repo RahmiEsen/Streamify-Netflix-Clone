@@ -22,9 +22,10 @@ import { UtilsModule } from './utils/utils.module';
         url: configService.get<string>('DATABASE_URL'),
         autoLoadEntities: true,
         synchronize: true,
-        ssl: {
-          rejectUnauthorized: false,
-        },
+        ssl:
+          process.env.NODE_ENV === 'production'
+            ? { rejectUnauthorized: false }
+            : false,
       }),
     }),
     CacheModule.registerAsync({

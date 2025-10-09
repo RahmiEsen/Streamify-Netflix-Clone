@@ -2,25 +2,13 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-interface Media {
-  id: Int!
-  title: String!
-  imageSet: ImageSet
-  overview: String
-  vote_average: Float!
-  release_date: String!
-  genres: [String!]!
-  keywords: [Keyword!]
-  fsk: String
-}
-
 type ImageSet {
-  posterUrl: String
   backdropUrl: String
   backdropUrl2: String
   heroBackdropUrlDesktop: String
   heroBackdropUrlMobile: String
   logoUrl: String
+  posterUrl: String
 }
 
 type Keyword {
@@ -28,40 +16,51 @@ type Keyword {
   name: String!
 }
 
-type Movie implements Media {
-  id: Int!
-  title: String!
-  imageSet: ImageSet
-  overview: String
-  vote_average: Float!
-  release_date: String!
-  genres: [String!]!
-  keywords: [Keyword!]
+interface Media {
   fsk: String
-
-  """The runtime of the movie in minutes."""
-  duration: Float!
+  genres: [String!]!
+  id: Int!
+  imageSet: ImageSet
+  keywords: [Keyword!]
+  overview: String
+  release_date: String!
+  title: String!
+  vote_average: Float!
 }
 
-type Series implements Media {
-  id: Int!
-  title: String!
-  imageSet: ImageSet
-  overview: String
-  vote_average: Float!
-  release_date: String!
-  genres: [String!]!
-  keywords: [Keyword!]
+type Movie implements Media {
+  """The runtime of the movie in minutes."""
+  duration: Float!
   fsk: String
-
-  """The total number of seasons."""
-  numberOfSeasons: Int!
+  genres: [String!]!
+  id: Int!
+  imageSet: ImageSet
+  keywords: [Keyword!]
+  overview: String
+  release_date: String!
+  title: String!
+  vote_average: Float!
 }
 
 type Query {
-  popularMedia: [Media!]!
-  topRatedMedia: [Media!]!
+  heroMedia: Media!
   mediaByGenre(genreId: Int!): [Media!]!
   mediaById(id: Int!, mediaType: String!): Media
-  heroMedia: Media!
+  popularMedia: [Media!]!
+  topRatedMedia: [Media!]!
+}
+
+type Series implements Media {
+  fsk: String
+  genres: [String!]!
+  id: Int!
+  imageSet: ImageSet
+  keywords: [Keyword!]
+
+  """The total number of seasons."""
+  numberOfSeasons: Int!
+  overview: String
+  release_date: String!
+  title: String!
+  vote_average: Float!
 }
