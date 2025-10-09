@@ -15,6 +15,7 @@ import { AgeRatingComponent } from './age-rating/age-rating.component';
 import { Media, Movie } from '../../../core/models/media.model';
 import { FastAverageColor } from 'fast-average-color';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-hero-banner',
@@ -55,10 +56,11 @@ export class HeroBannerComponent implements OnChanges {
   }
 
   private applyGradientFromBackend(path: string): void {
+    const backendUrl = environment.backendUrl;
     this.http
       .get<{
         dominantColor: string;
-      }>(`http://localhost:3000/api/colors?path=${path}`)
+      }>(`${backendUrl}/api/colors?path=${path}`)
       .subscribe((colorResult) => {
         const background = `${colorResult.dominantColor}`;
         this.setBackgroundStyle(background);
