@@ -1,54 +1,58 @@
+// Backend/src/app.module.ts (FINALE VERSION)
+
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { CacheModule } from '@nestjs/cache-manager';
+import { redisStore } from 'cache-manager-redis-yet';
 import { join } from 'path';
 import { MediaModule } from './media/media.module';
 import { UtilsModule } from './utils/utils.module';
-import { CacheModule } from '@nestjs/cache-manager';
-import { redisStore } from 'cache-manager-redis-yet';
 
 @Module({
   imports: [
-    UtilsModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    CacheModule.registerAsync({
-      isGlobal: true,
-      useFactory: async () => ({
-        store: await redisStore({
-          socket: {
-            host: 'localhost',
-            port: 6379,
-          },
-          ttl: 3600 * 1000,
-        }),
-      }),
-    }),
+
+    // Dieser Block liest die DATABASE_URL von Render
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        host: configService.get<string>('DB_HOST'),
-        port: configService.get<number>('DB_PORT'),
-        username: configService.get<string>('DB_USERNAME'),
-        password: configService.get<string>('DB_PASSWORD'),
-        database: configService.get<string>('DB_DATABASE'),
+        url: configService.get<string>('DATABASE_URL'),
         autoLoadEntities: true,
         synchronize: true,
+        ssl: {
+          rejectUnauthorized: false,
+        },
       }),
     }),
+
+    // Dieser Block liest die REDIS_URL von Render
+    CacheModule.registerAsync({
+      isGlobal: true,
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        store: await redisStore({
+          url: configService.get<string>('REDIS_URL'),
+          ttl: 60 * 60 * 1000,
+        }),
+      }),
+    }),
+
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      playground: true,
+      sortSchema: true,
     }),
+
     MediaModule,
+    UtilsModule,
   ],
-  controllers: [],
-  providers: [],
 })
 export class AppModule {}
