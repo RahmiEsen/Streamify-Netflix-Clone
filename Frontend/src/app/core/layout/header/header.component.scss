@@ -67,14 +67,13 @@
 .mobile-bottom-nav {
   position: fixed;
   display: none;
-  bottom: 0;
+  bottom: -1px;
   left: 0;
   width: 100%;
   padding: 12px 4%;
-  background: rgba(20, 20, 20, 0.8);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(40, 40, 40, 0.8);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
   z-index: 2;
   ul {
     @include m.space;
@@ -103,7 +102,7 @@
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 500px) {
   .main-header {
     @include m.column-start;
     min-height: auto;
@@ -149,7 +148,7 @@
         opacity: 0;
       }
       li {
-        border: 1px solid #6d6d6eb3;
+        border: 1px solid #b1b1b1;
         border-radius: 16px;
         padding: 6px 12px;
         margin-left: 0;

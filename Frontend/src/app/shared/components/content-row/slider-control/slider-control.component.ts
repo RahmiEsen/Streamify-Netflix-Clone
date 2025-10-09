@@ -84,6 +84,37 @@ export class SliderControlComponent implements OnChanges, AfterViewInit {
   private reinitializeSlider(): void {
     if (!this.items || this.items.length === 0) return;
     this.originalItemCount = this.items.length;
+    if (this.isMobileScrollMode()) {
+      this.displayItems = this.items;
+      this.currentIndex = 0;
+      this.itemsPerPage = this.items.length;
+      this.isSliderActive = true;
+      this.showPrevButton = false;
+    } else {
+      this.totalPages = Math.ceil(this.originalItemCount / this.itemsPerPage);
+      this.isSliderActive = false;
+      this.showPrevButton = false;
+      this.currentIndex = 0;
+      this.itemsPerPage =
+        parseInt(
+          getComputedStyle(this.elementRef.nativeElement).getPropertyValue(
+            '--visible',
+          ),
+          10,
+        ) || 6;
+      this.setupInitialDisplayItems();
+    }
+    this.currentPage = 0;
+    this.updateTransform();
+    Promise.resolve().then(() => {
+      this.pagesInitialized.emit(this.totalPages);
+    });
+    this.pageChange.emit(this.currentPage);
+  }
+
+  /* private reinitializeSlider(): void {
+    if (!this.items || this.items.length === 0) return;
+    this.originalItemCount = this.items.length;
     this.totalPages = Math.ceil(this.originalItemCount / this.itemsPerPage);
     this.isSliderActive = false;
     this.showPrevButton = false;
@@ -96,7 +127,7 @@ export class SliderControlComponent implements OnChanges, AfterViewInit {
       this.pagesInitialized.emit(this.totalPages);
     });
     this.pageChange.emit(this.currentPage);
-  }
+  } */
 
   private updateItemsPerPage(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -119,7 +150,7 @@ export class SliderControlComponent implements OnChanges, AfterViewInit {
   }
 
   scrollLeft(): void {
-    if (this.isTransitioning) return;
+    if (this.isTransitioning || this.isMobileScrollMode()) return;
     this.isTransitioning = true;
     if (this.scrollMode === 'ranked') {
       this.scrollLeftRanked();
@@ -147,7 +178,7 @@ export class SliderControlComponent implements OnChanges, AfterViewInit {
   }
 
   scrollRight(): void {
-    if (this.isTransitioning) return;
+    if (this.isTransitioning || this.isMobileScrollMode()) return;
     this.isTransitioning = true;
 
     const isFirstScroll = !this.isSliderActive;
@@ -235,5 +266,12 @@ export class SliderControlComponent implements OnChanges, AfterViewInit {
 
   onCardHoverChange(isHovered: boolean): void {
     this.rowHoverStateChange.emit(isHovered);
+  }
+
+  private isMobileScrollMode(): boolean {
+    if (isPlatformBrowser(this.platformId)) {
+      return window.innerWidth <= 800;
+    }
+    return false;
   }
 }

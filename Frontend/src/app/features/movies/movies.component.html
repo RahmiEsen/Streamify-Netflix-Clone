@@ -2,19 +2,18 @@
   *ngIf="heroMedia$ | async as hero"
   [heroMovie]="hero"
 ></app-hero-banner>
-<cdk-virtual-scroll-viewport
-  class="content-rows-viewport"
-  *ngIf="contentRows$ | async as rows"
-  itemSize="350"
->
-  <app-content-row
-    *cdkVirtualFor="let row of rows; trackBy: trackByRow"
-    [rowTitle]="row.rowTitle"
-    [items]="row.items"
-    (openModal)="handleOpenModal($event)"
-  >
-  </app-content-row>
-</cdk-virtual-scroll-viewport>
+<div class="content-rows">
+  <ng-container *ngIf="contentRows$ | async as rows">
+    <app-content-row
+      *ngFor="let row of rows; trackBy: trackByRow"
+      [rowTitle]="row.rowTitle"
+      [items]="row.items"
+      [displayMode]="row.displayMode || 'default'"
+      (openModal)="handleOpenModal($event)"
+    >
+    </app-content-row>
+  </ng-container>
+</div>
 <app-detail-modal
   *ngIf="selectedMediaForModal"
   [modalPayload]="selectedMediaForModal"

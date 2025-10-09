@@ -1,12 +1,8 @@
-<div class="ranked-card-container">
-  <svg [attr.viewBox]="item.viewBox" class="rank-number">
+<div class="card-container">
+  <svg [attr.viewBox]="item.viewBox">
     <path stroke="#595959" stroke-width="4" [attr.d]="item.pathD"></path>
   </svg>
-  <div class="poster-container">
-    <img
-      class="poster"
-      [src]="item.media.imageSet?.posterUrl"
-      [alt]="item.media.title"
-    />
+  <div class="card-poster">
+    <img [src]="item.media.imageSet?.posterUrl" [alt]="item.media.title" />
   </div>
 </div>

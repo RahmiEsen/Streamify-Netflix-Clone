@@ -25,7 +25,6 @@ export abstract class MediaPageComponent implements OnInit {
 
   ngOnInit(): void {
     const { filterFn, genres, pageTitle } = this.config;
-
     this.heroMedia$ = this.graphqlService.getPopularMedia().pipe(
       take(1),
       map((mediaList) => {
@@ -39,7 +38,6 @@ export abstract class MediaPageComponent implements OnInit {
         );
       }),
     );
-
     const genreStreams = genres.reduce(
       (acc, genreConfig) => {
         acc[genreConfig.rowTitle] = this.graphqlService
@@ -49,7 +47,6 @@ export abstract class MediaPageComponent implements OnInit {
       },
       {} as Record<string, Observable<Media[]>>,
     );
-
     this.contentRows$ = forkJoin({
       popular: this.graphqlService.getPopularMedia().pipe(take(1)),
       topRated: this.graphqlService.getTopRatedMedia().pipe(take(1)),
@@ -58,7 +55,6 @@ export abstract class MediaPageComponent implements OnInit {
       map((apiResult) => {
         const popularMedia = apiResult.popular.filter(filterFn);
         const topRatedMedia = apiResult.topRated.filter(filterFn);
-
         const rankedItems = popularMedia
           .slice(0, 10)
           .map((mediaItem, index) => {
@@ -70,14 +66,12 @@ export abstract class MediaPageComponent implements OnInit {
               pathD: svgData.pathD,
             };
           });
-
         const genreRows = genres.map((genreConfig) => ({
           rowTitle: genreConfig.rowTitle,
           items: (
             (apiResult as Record<string, Media[]>)[genreConfig.rowTitle] || []
           ).filter(filterFn),
         }));
-
         return [
           { rowTitle: 'Von der Kritik gelobt', items: topRatedMedia },
           {

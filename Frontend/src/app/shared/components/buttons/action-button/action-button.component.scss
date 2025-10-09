@@ -41,7 +41,7 @@ button {
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 500px) {
   button {
     padding: 1.5vw 2.5vw;
     margin: 0;
@@ -57,14 +57,14 @@ button {
 
 @media (max-width: 500px) {
   button {
-    padding: 2.5vw 3.5vw;
+    padding: 2vw 6vw;
     margin: 0;
     .btn-icon {
-      height: 6vw;
-      width: 6vw;
+      height: 5.5vw;
+      width: 5.5vw;
     }
     span {
-      font-size: 3.5vw;
+      font-size: 3.75vw;
     }
   }
 }

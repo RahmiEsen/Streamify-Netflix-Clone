@@ -1,4 +1,4 @@
-@use './variables' as var;
+@use "./variables" as var;
 
 *,
 *::before,
@@ -11,4 +11,10 @@
 body {
   background-color: var.$background;
   color: var.$white;
+}
+
+@media (max-width: 500px) {
+  body {
+    background-color: var.$black;
+  }
 }
