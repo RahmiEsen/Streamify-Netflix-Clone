@@ -1,5 +1,3 @@
-// Backend/src/app.module.ts (FINALE VERSION)
-
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
@@ -16,8 +14,6 @@ import { UtilsModule } from './utils/utils.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-
-    // Dieser Block liest die DATABASE_URL von Render
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -31,8 +27,6 @@ import { UtilsModule } from './utils/utils.module';
         },
       }),
     }),
-
-    // Dieser Block liest die REDIS_URL von Render
     CacheModule.registerAsync({
       isGlobal: true,
       imports: [ConfigModule],
@@ -44,13 +38,11 @@ import { UtilsModule } from './utils/utils.module';
         }),
       }),
     }),
-
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
     }),
-
     MediaModule,
     UtilsModule,
   ],
